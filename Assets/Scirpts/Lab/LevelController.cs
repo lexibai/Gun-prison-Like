@@ -6,19 +6,32 @@ namespace Lab
 {
     public class LevelController : MonoBehaviour
     {
-        public TileBase groutTile;
-        public Tilemap tilemap;
+        public List<TileBase> wallTiles;
+        public List<TileBase> floorTiles;
+        public Tilemap wallTileMap;
+        public Tilemap floorTileMap;
 
         public GameObject playerPrefab;
         public GameObject enemyPrefab;
         public GameObject finishPrefab;
 
-
+        [System.NonSerialized]
         public List<string> startCfg;
+        [System.NonSerialized]
         public List<string> normalCfg;
+        [System.NonSerialized]
         public List<string> finishCfg;
 
-
+        private TileBase wallTile { 
+            get { 
+                return wallTiles[Random.Range(0,4)];
+            } 
+        }
+        private TileBase floorTile {
+            get { 
+                return floorTiles[Random.Range(0, 4)];
+            }
+        }
 
         void Start()
         {
@@ -86,9 +99,10 @@ namespace Lab
                 {
                     int map_y = roomCfg.Count - 1 - y - Mathf.FloorToInt(offset.y); // Unity的Tilemap坐标系Y轴向上为正
                     int map_x = x + Mathf.FloorToInt(offset.x);
+                    floorTileMap.SetTile(new Vector3Int(map_x, map_y, 0), floorTile);
                     if (roomCfg[y][x] == '0')
                     {
-                        tilemap.SetTile(new Vector3Int(map_x, map_y, 0), groutTile);
+                        wallTileMap.SetTile(new Vector3Int(map_x, map_y, 0), wallTile);
                     }
                     else if (roomCfg[y][x] == '@')
                     {

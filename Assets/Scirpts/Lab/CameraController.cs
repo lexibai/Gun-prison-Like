@@ -5,6 +5,7 @@ namespace Lab
 {
     public class CameraController : MonoBehaviour
     {
+        public float smoothTime = 5f; // 平滑时间
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,9 +19,11 @@ namespace Lab
         {
             if (Global.Player)
             {
-                Vector3 position = Global.Player.transform.position;
-                position.z = transform.position.z;
-                transform.position = position;
+                Vector3 startPos = Camera.main.transform.position;
+                Vector3 targetPos = Global.Player.transform.position;
+                Vector3 curPos = Vector3.Lerp(startPos, targetPos, 1 - Mathf.Exp(-Time.deltaTime* smoothTime));
+                curPos.z = startPos.z; // 保持相机的Z轴位置不变
+                transform.position = curPos;
             }
             else
             {

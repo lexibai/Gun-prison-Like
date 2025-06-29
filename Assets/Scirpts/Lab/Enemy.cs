@@ -14,6 +14,8 @@ namespace Lab
 
         public State state = State.Tracking;
 
+        public SpriteRenderer sprite;
+
         public float waitTime = 1.0f;
 
         public Rigidbody2D rb;
@@ -39,8 +41,19 @@ namespace Lab
                     return;
                 }
                 Vector3 dir = Global.Player.transform.position - transform.position;
-                //transform.Translate(dir.normalized * Time.deltaTime);
-                rb.linearVelocity = dir.normalized * 2f; // 设置刚体速度
+                rb.linearVelocity = dir.normalized * 1f; // 设置刚体速度
+                if (sprite)
+                {
+                    if (dir.x < 0)
+                    {
+                        sprite.flipX = true;
+                    }
+                    else
+                    {
+                        sprite.flipX = false;
+                    }
+                }
+
 
                 waitTime -= Time.deltaTime;
             }

@@ -27,7 +27,7 @@ namespace Lab
             playerController.Player.Attack.performed += context =>
             {
                 // 获取鼠标在世界坐标中的位置
-                Vector3 mouseScreenPos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+                Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
                 Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
                 Vector2 direction = (mouseWorldPos - transform.position);
 
@@ -73,7 +73,7 @@ namespace Lab
         void Update()
         {
             //transform.position += new Vector3(moveInput.x, moveInput.y, 0) * Time.deltaTime;
-            rb.linearVelocity = moveInput.normalized * 3f; // 设置刚体速度
+            rb.linearVelocity = moveInput.normalized * 5f; // 设置刚体速度
         }
 
         public void Hurt(int damage)

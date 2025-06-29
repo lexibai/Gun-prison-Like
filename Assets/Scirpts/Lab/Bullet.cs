@@ -39,6 +39,10 @@ namespace Lab
                     Destroy(gameObject);
                     collision.gameObject.GetComponent<ICanHurt>()?.Hurt(1);
                 }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
             
         }
