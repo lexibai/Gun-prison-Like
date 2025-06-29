@@ -1,0 +1,100 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Lab
+{
+    public class Enemy : MonoBehaviour, ICanHurt
+    {
+        public enum State
+        {
+            Tracking,
+            Attack
+        }
+
+        public GameObject enemyBullet;
+
+        public State state = State.Tracking;
+
+        public SpriteRenderer sprite;
+
+        public float waitTime = 1.0f;
+
+        public Rigidbody2D rb;
+
+        public List<AudioClip> fireAudios;
+
+        public AudioSource audioSource;
+
+
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+            Application.targetFrameRate = 60; // Set target frame rate to 60 FPS
+            rb = GetComponent<Rigidbody2D>();
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (state == State.Tracking)
+            {
+                if (waitTime <= 0)
+                {
+                    waitTime = 1f; // Reset tracking time to a random value between 1 and 3 seconds
+                    state = State.Attack;
+                    return;
+                }
+                Vector3 dir = Global.Player.transform.position - transform.position;
+                rb.linearVelocity = dir.normalized * 1f; // 设置刚体速度
+                if (sprite)
+                {
+                    if (dir.x < 0)
+                    {
+                        sprite.flipX = true;
+                    }
+                    else
+                    {
+                        sprite.flipX = false;
+                    }
+                }
+
+
+                waitTime -= Time.deltaTime;
+            }
+            else if (state == State.Attack)
+            {
+                if (waitTime <= 0)
+                {
+                    waitTime = Random.Range(1.0f, 3.0f); // Reset tracking time to a random value between 1 and 3 seconds
+                    state = State.Tracking; // Switch back to tracking state
+                    return;
+                }
+                waitTime -= Time.deltaTime;
+                // Attack logic can be implemented here
+                if (Time.frameCount % 20 == 0) // Attack every second
+                {
+                    audioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
+                    audioSource.Play();
+
+                    Vector2 direction = (Global.Player.transform.position - transform.position);
+                    GameObject bulletObj = Instantiate(enemyBullet);
+                    bulletObj.transform.position = transform.position;
+                    Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+                    playerBullet.Init(direction, "Player");
+                }
+
+            }
+
+        }
+
+        public void Hurt(int damage)
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+
+
