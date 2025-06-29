@@ -10,7 +10,6 @@ namespace Lab
             Attack
         }
 
-        public Transform player;
         public GameObject enemyBullet;
 
         public State state = State.Tracking;
@@ -22,7 +21,6 @@ namespace Lab
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            player = GameObject.Find("Player").transform;
             Application.targetFrameRate = 60; // Set target frame rate to 60 FPS
         }
 
@@ -37,7 +35,7 @@ namespace Lab
                     state = State.Attack;
                     return;
                 }
-                Vector3 dir = player.position - transform.position;
+                Vector3 dir = Global.Player.transform.position - transform.position;
                 transform.Translate(dir.normalized * Time.deltaTime);
                 waitTime -= Time.deltaTime;
             }
@@ -53,7 +51,7 @@ namespace Lab
                 // Attack logic can be implemented here
                 if (Time.frameCount % 20 == 0) // Attack every second
                 {
-                    Vector2 direction = (player.position - transform.position);
+                    Vector2 direction = (Global.Player.transform.position - transform.position);
                     GameObject bulletObj = Instantiate(enemyBullet);
                     bulletObj.transform.position = transform.position;
                     Bullet playerBullet = bulletObj.GetComponent<Bullet>();

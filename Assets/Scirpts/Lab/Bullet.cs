@@ -28,7 +28,7 @@ namespace Lab
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision?.gameObject?.name == target)
+            if (collision?.gameObject?.name.StartsWith(target)?? false)
             {
                 Destroy(gameObject);
                 collision.gameObject.SetActive(false);
