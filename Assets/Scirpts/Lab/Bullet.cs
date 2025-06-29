@@ -6,6 +6,7 @@ namespace Lab
     {
         public bool isInit = false;
         public Vector2 dir = Vector2.zero;
+        public Rigidbody2D rb;
         public string target = "";
 
         public void Init(Vector2 dir, string target)
@@ -13,6 +14,7 @@ namespace Lab
             isInit = true;
             this.dir = dir.normalized;
             this.target = target;
+            rb = GetComponent<Rigidbody2D>();
             gameObject.SetActive(true);
         }
 
@@ -21,19 +23,24 @@ namespace Lab
         {
             if (isInit)
             {
-                transform.Translate(dir * Time.deltaTime);
+                rb.linearVelocity = dir.normalized * 5;
             }
 
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision?.gameObject?.name.StartsWith(target)?? false)
+            if (isInit)
             {
-                Destroy(gameObject);
-                collision.gameObject.SetActive(false);
-                //GameUi.Instance.ShowGameOverPanel(); // 显示游戏结束面板
+                print($"Bullet collided with {collision.gameObject.name}");
+                print($"Target is {target}");
+                if (collision.gameObject.CompareTag(target))
+                {
+                    Destroy(gameObject);
+                    collision.gameObject.GetComponent<ICanHurt>()?.Hurt(1);
+                }
             }
+            
         }
     }
 }

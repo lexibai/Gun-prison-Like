@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Lab
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, ICanHurt
     {
         public enum State
         {
@@ -16,12 +16,15 @@ namespace Lab
 
         public float waitTime = 1.0f;
 
+        public Rigidbody2D rb;
+
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             Application.targetFrameRate = 60; // Set target frame rate to 60 FPS
+            rb = GetComponent<Rigidbody2D>();
         }
 
         // Update is called once per frame
@@ -36,7 +39,9 @@ namespace Lab
                     return;
                 }
                 Vector3 dir = Global.Player.transform.position - transform.position;
-                transform.Translate(dir.normalized * Time.deltaTime);
+                //transform.Translate(dir.normalized * Time.deltaTime);
+                rb.linearVelocity = dir.normalized * 2f; // 设置刚体速度
+
                 waitTime -= Time.deltaTime;
             }
             else if (state == State.Attack)
@@ -62,7 +67,10 @@ namespace Lab
 
         }
 
-
+        public void Hurt(int damage)
+        {
+            Destroy(gameObject);
+        }
     }
 }
 

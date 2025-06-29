@@ -1,22 +1,25 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Lab
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, ICanHurt
     {
         public PlayerController playerController;
         public GameObject bullet;
+        public SpriteRenderer sprite;
+        public Rigidbody2D rb;
+
+
         public Vector2 moveInput = new Vector2(0, 0);
 
         void Start()
         {
+            rb = GetComponent<Rigidbody2D>();
+
             playerController = new PlayerController();
             playerController.Enable(); // 启用输入
-
-            playerController.Player.Move.performed += context =>
-            {
-                moveInput = context.ReadValue<Vector2>();
-            };
+            playerController.Player.Move.performed += Move;
             playerController.Player.Move.canceled += context =>
             {
                 moveInput = context.ReadValue<Vector2>();
@@ -32,8 +35,21 @@ namespace Lab
                 bulletObj.transform.position = transform.position;
                 Bullet playerBullet = bulletObj.GetComponent<Bullet>();
 
-                playerBullet.Init(direction, "Enemy");
+                playerBullet.Init(direction, "enemy");
             };
+        }
+
+        private void Move(InputAction.CallbackContext ctx)
+        {
+            moveInput = ctx.ReadValue<Vector2>();
+            if (moveInput.x < 0)
+            {
+                sprite.flipX = true;
+            }
+            if (moveInput.x > 0)
+            {
+                sprite.flipX = false;
+            }
         }
 
         private void OnEnable()
@@ -56,7 +72,18 @@ namespace Lab
 
         void Update()
         {
-            transform.position += new Vector3(moveInput.x, moveInput.y, 0) * Time.deltaTime;
+            //transform.position += new Vector3(moveInput.x, moveInput.y, 0) * Time.deltaTime;
+            rb.linearVelocity = moveInput.normalized * 3f; // 设置刚体速度
+        }
+
+        public void Hurt(int damage)
+        {
+            Global.currentHp -= damage;
+            Global.hpChange?.Invoke();
+            if (Global.currentHp <= 0)
+            {
+                GameUi.Instance.ShowGameOverPanel();
+            }
         }
     }
 
