@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lab
@@ -20,6 +21,10 @@ namespace Lab
 
         public Rigidbody2D rb;
 
+        public List<AudioClip> fireAudios;
+
+        public AudioSource audioSource;
+
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +32,8 @@ namespace Lab
         {
             Application.targetFrameRate = 60; // Set target frame rate to 60 FPS
             rb = GetComponent<Rigidbody2D>();
+            audioSource = gameObject.AddComponent<AudioSource>();
+
         }
 
         // Update is called once per frame
@@ -36,7 +43,7 @@ namespace Lab
             {
                 if (waitTime <= 0)
                 {
-                    waitTime = Random.Range(1.0f, 3.0f); // Reset tracking time to a random value between 1 and 3 seconds
+                    waitTime = 1f; // Reset tracking time to a random value between 1 and 3 seconds
                     state = State.Attack;
                     return;
                 }
@@ -69,6 +76,9 @@ namespace Lab
                 // Attack logic can be implemented here
                 if (Time.frameCount % 20 == 0) // Attack every second
                 {
+                    audioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
+                    audioSource.Play();
+
                     Vector2 direction = (Global.Player.transform.position - transform.position);
                     GameObject bulletObj = Instantiate(enemyBullet);
                     bulletObj.transform.position = transform.position;

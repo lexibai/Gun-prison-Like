@@ -9,6 +9,9 @@ namespace Lab
         public GameObject bullet;
         public SpriteRenderer sprite;
         public Rigidbody2D rb;
+        public Transform weapon;
+        public Pistol pistol;
+        public bool isfireHold = false;
 
 
         public Vector2 moveInput = new Vector2(0, 0);
@@ -26,16 +29,13 @@ namespace Lab
             };
             playerController.Player.Attack.performed += context =>
             {
-                // 获取鼠标在世界坐标中的位置
-                Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
-                Vector2 direction = (mouseWorldPos - transform.position);
-
-                GameObject bulletObj = Instantiate(bullet);
-                bulletObj.transform.position = transform.position;
-                Bullet playerBullet = bulletObj.GetComponent<Bullet>();
-
-                playerBullet.Init(direction, "enemy");
+                isfireHold = true;
+                pistol.FireDown(LookDir());
+            };
+            playerController.Player.Attack.performed += context =>
+            {
+                isfireHold = false;
+                pistol.FireUp(LookDir());
             };
         }
 
@@ -74,6 +74,25 @@ namespace Lab
         {
             //transform.position += new Vector3(moveInput.x, moveInput.y, 0) * Time.deltaTime;
             rb.linearVelocity = moveInput.normalized * 5f; // 设置刚体速度
+
+            Vector2 direction = LookDir();
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            weapon.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // 调整武器朝向
+
+            weapon.localScale = new Vector3(1, direction.x > 0 ? 1 : -1,  1); // 根据鼠标位置调整武器缩放
+
+            if (isfireHold)
+            {
+                pistol.FireHold(LookDir());
+            }
+        }
+
+        private Vector2 LookDir()
+        {
+            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
+            Vector2 direction = (mouseWorldPos - transform.position);
+            return direction;
         }
 
         public void Hurt(int damage)
