@@ -32,7 +32,7 @@ namespace Lab
             {
                 Destroy(gameObject);
                 collision.gameObject.SetActive(false);
-                GameUi.Instance.ShowGameOverPanel(); // 显示游戏结束面板
+                //GameUi.Instance.ShowGameOverPanel(); // 显示游戏结束面板
             }
         }
     }
