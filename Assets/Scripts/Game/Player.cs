@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using GameRuntime.Weapon;
 
 namespace Lab
 {
     public class Player : MonoBehaviour, ICanHurt
     {
         public PlayerController playerController;
-        public GameObject bullet;
         public SpriteRenderer sprite;
         public Rigidbody2D rb;
         public Transform weapon;
