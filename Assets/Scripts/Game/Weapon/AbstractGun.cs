@@ -16,38 +16,63 @@ namespace GameRuntime.Weapon
 
         public abstract GameObject Bullet { get; }
 
-        protected float fireRate = 0f; // 每次射击间隔时间
+        protected virtual float fireRate => 0.3f; // 每次射击间隔时间
+        protected float fireTime = float.MaxValue;
 
         public virtual void FireDown(Vector2 dir)
         {
             Shoot(dir);
-            AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
-            AudioSource.Play();
+            AudioPlay();
+            ResetFireTime();
         }
 
         public virtual void FireHold(Vector2 dir)
         {
             //print("持续射击" + fireRate);
-            if(fireRate >= 0.3)
-            {
-                Shoot(dir);
-                AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
-                AudioSource.Play();
-                fireRate = 0f; // 重置射击间隔
-            }
-            fireRate += Time.deltaTime;
+
+            Shoot(dir);
+            AudioPlay();
+            ResetFireTime();
+
         }
 
         public virtual void FireUp(Vector2 dir)
         {
-            fireRate = 0f;
         }
 
-        protected virtual void Shoot(Vector2 dir) {
-            GameObject bulletObj = Instantiate(Bullet);
-            bulletObj.transform.position = Bullet.transform.position;
-            Bullet playerBullet = bulletObj.GetComponent<Bullet>();
-            playerBullet.Init(dir, "enemy");
+        protected void ResetFireTime()
+        {
+            if (fireTime > fireRate)
+            {
+                fireTime = 0f; // 重置射击间隔
+            }
+        }
+
+        protected virtual void Shoot(Vector2 dir)
+        {
+            if (fireTime >= fireRate)
+            {
+                GameObject bulletObj = Instantiate(Bullet);
+                bulletObj.transform.position = Bullet.transform.position;
+                Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+                playerBullet.Init(dir, "enemy");
+            }
+        }
+
+        protected virtual void AudioPlay()
+        {
+            if (fireTime >= fireRate)
+            {
+                AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
+                AudioSource.Play();
+            }
+        }
+
+
+
+        private void Update()
+        {
+            fireTime += Time.deltaTime;
         }
     }
 }

@@ -5,11 +5,33 @@ using QFramework;
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
 namespace GameRuntime.Weapon
 {
-	public partial class AK : ViewController
+	public partial class AK : AbstractGun
 	{
-		void Start()
-		{
-			// Code Here
-		}
-	}
+        public override AudioSource AudioSource => SelfAudioSource;
+
+        public override GameObject Bullet => bullet;
+
+        protected override float fireRate => 0.1f;
+
+
+        public override void FireDown(Vector2 dir)
+        {
+            base.FireDown(dir);
+            AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
+            AudioSource.Play();
+        }
+
+        public override void FireHold(Vector2 dir)
+        {
+            Shoot(dir);
+            ResetFireTime();
+        }
+
+        public override void FireUp(Vector2 dir)
+        {
+            AudioSource.Stop();
+            AudioSource.clip = AKShootEnd;
+            AudioSource.Play();
+        }
+    }
 }

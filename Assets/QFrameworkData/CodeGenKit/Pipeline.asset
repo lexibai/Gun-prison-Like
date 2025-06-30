@@ -22,8 +22,8 @@ MonoBehaviour:
     - TypeName: UnityEngine.GameObject
       PathToRoot: bullet
       MemberName: bullet
-    ScriptsFolder: Assets\Scripts\Game\Weapon
-    ClassName: MP5
+    ScriptsFolder: Assets/Scripts/Game/Weapon
+    ClassName: AWP
     Namespace: GameRuntime.Weapon
     MainCode: 
     DesignerCode: 

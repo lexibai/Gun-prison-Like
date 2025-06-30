@@ -128,9 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 70192279}
-  - component: {fileID: 70192280}
   - component: {fileID: 70192281}
   - component: {fileID: 70192282}
+  - component: {fileID: 70192283}
   m_Layer: 3
   m_Name: AK
   m_TagString: Untagged
@@ -155,25 +155,6 @@ Transform:
   - {fileID: 1584285248}
   m_Father: {fileID: 1225789478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &70192280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70192278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81936539ae2d84665a86a2b3f531955f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Namespace: GameRuntime.Weapon
-  ScriptName: AK
-  ScriptsFolder: Assets/Scripts/Game/Weapon
-  GeneratePrefab: 0
-  PrefabFolder: Assets/Art/Prefab
-  ArchitectureFullTypeName: 
-  ViewControllerFullTypeName: 
 --- !u!82 &70192281
 AudioSource:
   m_ObjectHideFlags: 0
@@ -286,6 +267,32 @@ MonoBehaviour:
   Binds:
   - MemberName: SelfAudioSource
     Object: {fileID: 70192281}
+  - MemberName: AKShootEnd
+    Object: {fileID: 8300000, guid: dda222f6a4e65dc40964f21729a9469a, type: 3}
+--- !u!114 &70192283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70192278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96b55bf109032774d8eb6988d9432b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Namespace: GameRuntime.Weapon
+  ScriptName: AK
+  ScriptsFolder: Assets\Scripts\Game\Weapon
+  GeneratePrefab: 0
+  PrefabFolder: Assets/Art/Prefab
+  ArchitectureFullTypeName: 
+  ViewControllerFullTypeName: 
+  fireAudios:
+  - {fileID: 8300000, guid: a549e57f7c802f54d9dbf6ae8cab7844, type: 3}
+  bullet: {fileID: 1584285247}
+  SelfAudioSource: {fileID: 70192281}
+  AKShootEnd: {fileID: 8300000, guid: dda222f6a4e65dc40964f21729a9469a, type: 3}
 --- !u!1 &105132121
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,16 +302,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 105132122}
-  - component: {fileID: 105132123}
   - component: {fileID: 105132124}
   - component: {fileID: 105132125}
+  - component: {fileID: 105132126}
   m_Layer: 3
   m_Name: AWP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &105132122
 Transform:
   m_ObjectHideFlags: 0
@@ -322,25 +329,6 @@ Transform:
   - {fileID: 1097536239}
   m_Father: {fileID: 1225789478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &105132123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105132121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81936539ae2d84665a86a2b3f531955f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Namespace: GameRuntime.Weapon
-  ScriptName: AWP
-  ScriptsFolder: Assets/Scripts/Game/Weapon
-  GeneratePrefab: 0
-  PrefabFolder: Assets/Art/Prefab
-  ArchitectureFullTypeName: 
-  ViewControllerFullTypeName: 
 --- !u!82 &105132124
 AudioSource:
   m_ObjectHideFlags: 0
@@ -453,6 +441,29 @@ MonoBehaviour:
   Binds:
   - MemberName: SelfAudioSource
     Object: {fileID: 105132124}
+--- !u!114 &105132126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105132121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3310d7109773346a0a464a78b37e85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Namespace: GameRuntime.Weapon
+  ScriptName: AWP
+  ScriptsFolder: Assets/Scripts/Game/Weapon
+  GeneratePrefab: 0
+  PrefabFolder: Assets/Art/Prefab
+  ArchitectureFullTypeName: 
+  ViewControllerFullTypeName: 
+  fireAudios:
+  - {fileID: 8300000, guid: b2c7c89817fbbf9488150437ce1b608d, type: 3}
+  bullet: {fileID: 1097536238}
+  SelfAudioSource: {fileID: 105132124}
 --- !u!1 &110368151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,7 +1223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &380954081
 Transform:
   m_ObjectHideFlags: 0
@@ -5221,7 +5232,7 @@ MonoBehaviour:
   sprite: {fileID: 758134228}
   rb: {fileID: 0}
   weapon: {fileID: 1225789478}
-  gun: {fileID: 380954085}
+  gun: {fileID: 105132126}
   isfireHold: 0
   moveInput: {x: 0, y: 0}
 --- !u!4 &1868368660

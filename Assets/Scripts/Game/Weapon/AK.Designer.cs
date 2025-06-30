@@ -1,4 +1,4 @@
-// Generate Id:cb1c2e23-7a7f-431d-a8c1-1b511db408dd
+// Generate Id:66404f64-b943-43d5-be92-7eff1df7343b
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -10,6 +10,8 @@ namespace GameRuntime.Weapon
 		public UnityEngine.GameObject bullet;
 		
 		public UnityEngine.AudioSource SelfAudioSource;
+		
+		public UnityEngine.AudioClip AKShootEnd;
 		
 	}
 }

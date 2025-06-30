@@ -12,6 +12,8 @@ namespace GameRuntime.Weapon
 
         public override GameObject Bullet => bullet;
 
+        protected override float fireRate => 0.1f;
+
         public override void FireDown(Vector2 dir)
         {
             base.FireDown(dir);
@@ -21,13 +23,8 @@ namespace GameRuntime.Weapon
 
         public override void FireHold(Vector2 dir)
         {
-            print("持续射击" + fireRate);
-            if (fireRate <= 0)
-            {
-                FireDown(dir);
-                fireRate = 0.1f; // 重置射击间隔
-            }
-            fireRate -= Time.deltaTime;
+            Shoot(dir);
+            ResetFireTime();
         }
 
         public override void FireUp(Vector2 dir)
