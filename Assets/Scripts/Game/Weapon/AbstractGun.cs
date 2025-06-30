@@ -28,8 +28,6 @@ namespace GameRuntime.Weapon
 
         public virtual void FireHold(Vector2 dir)
         {
-            //print("³ÖÐøÉä»÷" + fireRate);
-
             Shoot(dir);
             AudioPlay();
             ResetFireTime();
@@ -54,6 +52,7 @@ namespace GameRuntime.Weapon
             {
                 GameObject bulletObj = Instantiate(Bullet);
                 bulletObj.transform.position = Bullet.transform.position;
+                bulletObj.Rotation(Quaternion.AngleAxis(dir.ToAngle(), bulletObj.transform.forward));
                 Bullet playerBullet = bulletObj.GetComponent<Bullet>();
                 playerBullet.Init(dir, "enemy");
             }
