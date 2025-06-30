@@ -1,4 +1,4 @@
-// Generate Id:85abb488-93da-4327-8802-9d23ae18e9f6
+// Generate Id:9bfab435-8a9b-4d9b-8d02-809f1545359f
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -8,6 +8,8 @@ namespace GameRuntime.Weapon
 	public partial class AWP
 	{
 		public UnityEngine.GameObject bullet;
+		
+		public UnityEngine.AudioSource SelfAudioSource;
 		
 	}
 }

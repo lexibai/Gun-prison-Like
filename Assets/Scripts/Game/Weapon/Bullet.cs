@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Lab
+namespace GameRuntime.Weapon
 {
     public class Bullet : MonoBehaviour
     {
@@ -23,7 +23,7 @@ namespace Lab
         {
             if (isInit)
             {
-                rb.linearVelocity = dir.normalized * 5;
+                rb.linearVelocity = dir.normalized * 10;
             }
 
         }

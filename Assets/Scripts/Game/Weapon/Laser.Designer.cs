@@ -1,4 +1,4 @@
-// Generate Id:1cdd3bb9-4f59-4f4a-b2dd-1814079f866c
+// Generate Id:992343bc-42e3-487a-80c4-df19fb15fdf8
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -8,6 +8,8 @@ namespace GameRuntime.Weapon
 	public partial class Laser
 	{
 		public UnityEngine.GameObject bullet;
+		
+		public UnityEngine.AudioSource SelfAudioSource;
 		
 	}
 }

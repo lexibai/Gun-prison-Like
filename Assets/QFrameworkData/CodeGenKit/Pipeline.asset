@@ -22,8 +22,8 @@ MonoBehaviour:
     - TypeName: UnityEngine.GameObject
       PathToRoot: bullet
       MemberName: bullet
-    ScriptsFolder: Assets/Scripts/Game/Weapon
-    ClassName: RocketGun
+    ScriptsFolder: Assets\Scripts\Game\Weapon
+    ClassName: MP5
     Namespace: GameRuntime.Weapon
     MainCode: 
     DesignerCode: 

@@ -1,4 +1,4 @@
-// Generate Id:59a2cdcc-99a4-4ccd-98ea-dde8cec135cf
+// Generate Id:f8c534c4-999e-423a-8440-60f3c5841260
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -8,6 +8,8 @@ namespace GameRuntime.Weapon
 	public partial class Bow
 	{
 		public UnityEngine.GameObject bullet;
+		
+		public UnityEngine.AudioSource SelfAudioSource;
 		
 	}
 }

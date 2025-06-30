@@ -10,7 +10,7 @@ namespace Lab
         public SpriteRenderer sprite;
         public Rigidbody2D rb;
         public Transform weapon;
-        public Pistol pistol;
+        public AbstractGun gun;
         public bool isfireHold = false;
 
 
@@ -29,13 +29,15 @@ namespace Lab
             };
             playerController.Player.Attack.performed += context =>
             {
+                //print("开启"+isfireHold);
                 isfireHold = true;
-                pistol.FireDown(LookDir());
+                gun.FireDown(LookDir());
             };
-            playerController.Player.Attack.performed += context =>
+            playerController.Player.Attack.canceled += context =>
             {
+                //print("关闭"+isfireHold);
                 isfireHold = false;
-                pistol.FireUp(LookDir());
+                gun.FireUp(LookDir());
             };
         }
 
@@ -81,9 +83,10 @@ namespace Lab
 
             weapon.localScale = new Vector3(1, direction.x > 0 ? 1 : -1,  1); // 根据鼠标位置调整武器缩放
 
+            //print(isfireHold);
             if (isfireHold)
             {
-                pistol.FireHold(LookDir());
+                gun.FireHold(LookDir());
             }
         }
 
