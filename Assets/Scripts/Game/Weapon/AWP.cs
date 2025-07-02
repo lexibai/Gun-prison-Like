@@ -5,12 +5,36 @@ using QFramework;
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
 namespace GameRuntime.Weapon
 {
-	public partial class AWP : AbstractGun
-	{
+    public partial class AWP : AbstractGun
+    {
         public override AudioSource AudioSource => SelfAudioSource;
 
         public override GameObject Bullet => bullet;
 
-        protected override float fireRate => 3f;
+        //protected override float fireRate => 3f;
+        private ShootDuration shootDuration = new ShootDuration(3f);
+
+        public override void FireDown(Vector2 dir)
+        {
+            if (shootDuration.CanShoot())
+            {
+                base.FireDown(dir);
+                shootDuration.Reset();
+
+            }
+        }
+
+        public override void FireHold(Vector2 dir)
+        {
+            if (shootDuration.CanShoot())
+            {
+                base.FireHold(dir);
+                shootDuration.Reset();
+
+            }
+        }
+
+
+
     }
 }

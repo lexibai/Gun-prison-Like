@@ -9,7 +9,8 @@ namespace GameRuntime.Weapon
     {
         public override AudioSource AudioSource => SelfAudioSource;
         public override GameObject Bullet => bullet;
-        protected override float fireRate => 3f; // 每次射击间隔时间
+        protected float fireRate = 3f; // 每次射击间隔时间
+        protected float fireTime = 0; // 每次射击间隔时间
 
 
         public override void FireDown(Vector2 dir)
@@ -20,23 +21,26 @@ namespace GameRuntime.Weapon
         {
 
             fireTime += Time.deltaTime;
-            if (fireTime > 1f)
+            if (fireTime > 3f)
             {
-                bulletSprite.gameObject.SetActive(true);
                 Shoot(dir);
                 AudioPlay();
-            }
-            else
-            {
                 bulletSprite.gameObject.SetActive(false);
+                fireTime = 0f; // 重置射击间隔
+                
+            }else if (fireTime > 1f)
+            {
+                bulletSprite.gameObject.SetActive(true);
             }
-            ResetFireTime();
-
 
         }
 
         public override void FireUp(Vector2 dir)
         {
+            if(fireTime < 1f)
+                return;
+            Shoot(dir);
+            AudioPlay();
             bulletSprite.gameObject.SetActive(false);
             fireTime = 0f; // 重置射击间隔
         }

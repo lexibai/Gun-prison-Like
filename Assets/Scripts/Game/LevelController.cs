@@ -36,29 +36,47 @@ namespace Lab
         void Start()
         {
             startCfg = new() {
-                "0000000000",
-                "0        0",
-                "0  @     0",
-                "0        0",
-                "0         ",
-                "0         ",
-                "0        0",
-                "0        0",
-                "0        0",
-                "0000000000",
+                "0000000000000000000",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                  ",
+                "0      @           ",
+                "0                  ",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0000000000000000000",
             };
 
             normalCfg = new() {
-                "0000000000",
-                "0        0",
-                "0     #  0",
-                "0        0",
-                "          ",
-                "          ",
-                "0        0",
-                "0     #  0",
-                "0        0",
-                "0000000000",
+                "0000000000000000000",
+                "0                 0",
+                "0  #           #  0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0        ###      0",
+                "        #000#     ",
+                "        #000#     ",
+                "        #000#     ",
+                "0        ###      0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0                 0",
+                "0  #           #  0",
+                "0                 0",
+                "0000000000000000000",
             };
 
             finishCfg = new() {
@@ -66,6 +84,7 @@ namespace Lab
                 "0        0",
                 "0        0",
                 "0        0",
+                "         0",
                 "     F   0",
                 "         0",
                 "0        0",
@@ -76,7 +95,7 @@ namespace Lab
 
             GenerateRoom(Vector2.zero, startCfg);
             GenerateRoom(Vector2.zero + (Vector2.right * (startCfg[0].Length+2)), normalCfg);
-            GenerateRoom(Vector2.zero + (Vector2.right * (startCfg[0].Length + normalCfg[0].Length + 4)), finishCfg);
+            GenerateRoom(new Vector2(startCfg[0].Length + normalCfg[0].Length + 4, - 4), finishCfg);
 
 
 

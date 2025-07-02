@@ -39,6 +39,7 @@ namespace Lab
                 isfireHold = false;
                 gun.FireUp(LookDir());
             };
+            gun.gameObject.SetActive(true);
         }
 
         private void Move(InputAction.CallbackContext ctx)

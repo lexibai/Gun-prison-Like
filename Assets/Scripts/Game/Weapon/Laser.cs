@@ -9,7 +9,7 @@ namespace GameRuntime.Weapon
     {
         public override AudioSource AudioSource => SelfAudioSource;
         public override GameObject Bullet => bullet;
-        protected override float fireRate => 1f; // 每次射击间隔时间
+
 
         public bool isFiring = false;
 
@@ -40,8 +40,6 @@ namespace GameRuntime.Weapon
             AudioSource.Stop();
             SelfLineRenderer.enabled = false;
         }
-
-
 
     }
 }

@@ -11,6 +11,28 @@ namespace GameRuntime.Weapon
 
         public override GameObject Bullet => bullet;
 
-        protected override float fireRate => 3f;
-	}
+        private ShootDuration shootDuration = new ShootDuration(3f);
+
+        public override void FireDown(Vector2 dir)
+        {
+            if (shootDuration.CanShoot())
+            {
+                base.FireDown(dir);
+                shootDuration.Reset();
+
+            }
+        }
+
+        public override void FireHold(Vector2 dir)
+        {
+            if (shootDuration.CanShoot())
+            {
+                base.FireHold(dir);
+                shootDuration.Reset();
+
+            }
+        }
+
+
+    }
 }

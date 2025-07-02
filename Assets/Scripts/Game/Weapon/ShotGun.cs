@@ -13,25 +13,49 @@ namespace GameRuntime.Weapon
 
         public override GameObject Bullet => bullet;
 
-        protected override float fireRate => 1f;
+        //protected override float fireRate => 1f;
+        private ShootDuration shootDuration = new ShootDuration(1f);
 
         protected override void Shoot(Vector2 dir)
         {
-            if (fireTime >= fireRate)
+
+            float angle = dir.ToAngle();
+            angle -= 8;
+            for (int i = 0; i < 4; i++)
             {
-                float angle = dir.ToAngle();
-                angle -= 8;
-                for (int i = 0; i < 4; i++)
-                {
-                    GameObject bulletObj = Instantiate(Bullet);
-                    bulletObj.transform.position = Bullet.transform.position;
-                    Bullet playerBullet = bulletObj.GetComponent<Bullet>();
-                    playerBullet.Init(angle.AngleToDirection2D(), "enemy");
-                    angle += 4; // 每次增加4度
-                }
+                GameObject bulletObj = Instantiate(Bullet);
+                bulletObj.transform.position = Bullet.transform.position;
+                Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+                playerBullet.Init(angle.AngleToDirection2D(), "enemy");
+                angle += 4; // 每次增加4度
             }
 
+
         }
+
+
+        public override void FireDown(Vector2 dir)
+        {
+            if (shootDuration.CanShoot())
+            {
+                base.FireDown(dir);
+                shootDuration.Reset();
+
+            }
+        }
+
+        public override void FireHold(Vector2 dir)
+        {
+            if (shootDuration.CanShoot())
+            {
+                base.FireHold(dir);
+                shootDuration.Reset();
+
+            }
+        }
+
+
+
 
 
     }
