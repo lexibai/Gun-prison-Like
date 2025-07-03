@@ -1,5 +1,6 @@
 using UnityEngine;
 using QFramework;
+using GameRuntime.UI;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
@@ -12,6 +13,12 @@ namespace GameRuntime.Weapon
         protected float fireRate = 3f; // 每次射击间隔时间
         protected float fireTime = 0; // 每次射击间隔时间
 
+        private GunClip clip = new GunClip(100);
+
+        private void OnEnable()
+        {
+            GameUi.Instance.ShowBulletNum(clip);
+        }
 
         public override void FireDown(Vector2 dir)
         {
@@ -25,10 +32,12 @@ namespace GameRuntime.Weapon
             {
                 Shoot(dir);
                 AudioPlay();
+                clip.useBullet();
                 bulletSprite.gameObject.SetActive(false);
                 fireTime = 0f; // 重置射击间隔
-                
-            }else if (fireTime > 1f)
+
+            }
+            else if (fireTime > 1f)
             {
                 bulletSprite.gameObject.SetActive(true);
             }
@@ -37,19 +46,20 @@ namespace GameRuntime.Weapon
 
         public override void FireUp(Vector2 dir)
         {
-            if(fireTime < 1f)
+            if (fireTime < 1f)
                 return;
             Shoot(dir);
             AudioPlay();
+            clip.useBullet();
             bulletSprite.gameObject.SetActive(false);
             fireTime = 0f; // 重置射击间隔
         }
 
 
 
-        private void Update()
+        public override void Reload()
         {
-
+            clip.Reset();
         }
     }
 }

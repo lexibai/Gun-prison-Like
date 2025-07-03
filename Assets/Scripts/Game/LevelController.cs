@@ -103,20 +103,20 @@ namespace Lab
 
 
         /// <summary>
-        /// O ±íÊ¾Ç½±Ú
-        /// @ ±íÊ¾Íæ¼Ò
-        /// # ±íÊ¾µĞÈË
-        /// F ±íÊ¾Í¨¹ıµã
+        /// O è¡¨ç¤ºå¢™å£
+        /// @ è¡¨ç¤ºç©å®¶
+        /// # è¡¨ç¤ºæ•Œäºº
+        /// F è¡¨ç¤ºé€šè¿‡ç‚¹
         /// </summary>
-        /// <param name="offset">Æ«ÒÆÁ¿</param>
-        /// <param name="roomCfg">·¿¼äÅäÖÃ</param>
+        /// <param name="offset">åç§»é‡</param>
+        /// <param name="roomCfg">æˆ¿é—´é…ç½®</param>
         public void GenerateRoom(Vector2 offset ,List<string> roomCfg)
         {
             for (int y = 0; y < roomCfg.Count; y++)
             {
                 for (int x = 0; x < roomCfg[y].Length; x++)
                 {
-                    int map_y = roomCfg.Count - 1 - y - Mathf.FloorToInt(offset.y); // UnityµÄTilemap×ø±êÏµYÖáÏòÉÏÎªÕı
+                    int map_y = roomCfg.Count - 1 - y - Mathf.FloorToInt(offset.y); // Unityçš„Tilemapåæ ‡ç³»Yè½´å‘ä¸Šä¸ºæ­£
                     int map_x = x + Mathf.FloorToInt(offset.x);
                     floorTileMap.SetTile(new Vector3Int(map_x, map_y, 0), floorTile);
                     if (roomCfg[y][x] == '0')
@@ -125,30 +125,30 @@ namespace Lab
                     }
                     else if (roomCfg[y][x] == '@')
                     {
-                        // ´¦ÀíÍæ¼Ò
+                        // å¤„ç†ç©å®¶
                         Vector3 playerPosition = new Vector3(map_x + 0.5f, map_y + 0.5f, 0);
                         GameObject player = Instantiate(playerPrefab);
                         player.transform.position = playerPosition;
-                        player.gameObject.SetActive(true); // È·±£Íæ¼Ò¶ÔÏó´¦ÓÚ¼¤»î×´Ì¬
-                        Global.Player = player; // ½«Íæ¼Ò¶ÔÏó´æ´¢µ½È«¾Ö±äÁ¿ÖĞ
+                        player.gameObject.SetActive(true); // ç¡®ä¿ç©å®¶å¯¹è±¡å¤„äºæ¿€æ´»çŠ¶æ€
+                        Global.Player = player; // å°†ç©å®¶å¯¹è±¡å­˜å‚¨åˆ°å…¨å±€å˜é‡ä¸­
 
                     }
                     else if (roomCfg[y][x] == '#')
                     {
-                        // ´¦ÀíµĞÈË
+                        // å¤„ç†æ•Œäºº
                         Vector3 enemyPosition = new Vector3(map_x + 0.5f, map_y + 0.5f, 0);
                         GameObject enemy = Instantiate(enemyPrefab);
                         enemy.transform.position = enemyPosition;
-                        enemy.gameObject.SetActive(true); // È·±£µĞÈË¶ÔÏó´¦ÓÚ¼¤»î×´Ì¬
-                        Global.Enmpy = enemy; // ½«µĞÈË¶ÔÏó´æ´¢µ½È«¾Ö±äÁ¿ÖĞ
+                        enemy.gameObject.SetActive(true); // ç¡®ä¿æ•Œäººå¯¹è±¡å¤„äºæ¿€æ´»çŠ¶æ€
+                        Global.Enmpy = enemy; // å°†æ•Œäººå¯¹è±¡å­˜å‚¨åˆ°å…¨å±€å˜é‡ä¸­
                     }
                     else if (roomCfg[y][x] == 'F')
                     {
-                        // ´¦ÀíÍ¨¹ıµã
+                        // å¤„ç†é€šè¿‡ç‚¹
                         Vector3 finishPosition = new Vector3(map_x + 0.5f, map_y + 0.5f, 0);
                         GameObject finish = Instantiate(finishPrefab);
                         finish.transform.position = finishPosition;
-                        finish.gameObject.SetActive(true); // È·±£Í¨¹ıµã¶ÔÏó´¦ÓÚ¼¤»î×´Ì¬
+                        finish.gameObject.SetActive(true); // ç¡®ä¿é€šè¿‡ç‚¹å¯¹è±¡å¤„äºæ¿€æ´»çŠ¶æ€
                     }
                 }
             }

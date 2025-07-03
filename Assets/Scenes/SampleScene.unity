@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 70192281}
   - component: {fileID: 70192282}
   - component: {fileID: 70192283}
+  - component: {fileID: 70192284}
   m_Layer: 3
   m_Name: AK
   m_TagString: Untagged
@@ -293,6 +294,22 @@ MonoBehaviour:
   bullet: {fileID: 1584285247}
   SelfAudioSource: {fileID: 70192281}
   AKShootEnd: {fileID: 8300000, guid: dda222f6a4e65dc40964f21729a9469a, type: 3}
+--- !u!114 &70192284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70192278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.AK
 --- !u!1 &105132121
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +322,7 @@ GameObject:
   - component: {fileID: 105132124}
   - component: {fileID: 105132125}
   - component: {fileID: 105132126}
+  - component: {fileID: 105132127}
   m_Layer: 3
   m_Name: AWP
   m_TagString: Untagged
@@ -464,6 +482,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b2c7c89817fbbf9488150437ce1b608d, type: 3}
   bullet: {fileID: 1097536238}
   SelfAudioSource: {fileID: 105132124}
+--- !u!114 &105132127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105132121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.AWP
 --- !u!1 &110368151
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +510,7 @@ GameObject:
   - component: {fileID: 110368155}
   - component: {fileID: 110368154}
   - component: {fileID: 110368153}
+  - component: {fileID: 110368156}
   m_Layer: 5
   m_Name: reStart
   m_TagString: Untagged
@@ -585,6 +620,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110368151}
   m_CullTransparentMesh: 1
+--- !u!114 &110368156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110368151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: reStart
+  CustomComment: 
+  mComponentName: UnityEngine.UI.Button
 --- !u!1 &153308260
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,6 +909,7 @@ GameObject:
   - component: {fileID: 346689502}
   - component: {fileID: 346689503}
   - component: {fileID: 346689504}
+  - component: {fileID: 346689505}
   m_Layer: 3
   m_Name: Pistol
   m_TagString: Untagged
@@ -1019,6 +1071,22 @@ MonoBehaviour:
   Binds:
   - MemberName: SelfAudioSource
     Object: {fileID: 346689503}
+--- !u!114 &346689505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346689500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.Pistol
 --- !u!1 &348011234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,6 +1285,7 @@ GameObject:
   - component: {fileID: 380954083}
   - component: {fileID: 380954084}
   - component: {fileID: 380954085}
+  - component: {fileID: 380954086}
   m_Layer: 3
   m_Name: ShotGun
   m_TagString: Untagged
@@ -1378,6 +1447,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0667109a8d4d6924f9b2886d5586178b, type: 3}
   bullet: {fileID: 592327346}
   SelfAudioSource: {fileID: 380954083}
+--- !u!114 &380954086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380954080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.ShotGun
 --- !u!1 &393531362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,6 +1922,102 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &616141797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 616141798}
+  - component: {fileID: 616141800}
+  - component: {fileID: 616141799}
+  - component: {fileID: 616141801}
+  m_Layer: 5
+  m_Name: bulletCount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &616141798
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616141797}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 841094572}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 40, y: -60}
+  m_SizeDelta: {x: 520, y: 50}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &616141799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616141797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\u5B50\u5F39\u6570\u91CF\uFF1A0/0\uFF08R\u952E\u91CD\u7F6E\uFF09"
+--- !u!222 &616141800
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616141797}
+  m_CullTransparentMesh: 1
+--- !u!114 &616141801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616141797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: bulletCount
+  CustomComment: 
+  mComponentName: UnityEngine.UI.Text
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2020,6 +2201,7 @@ GameObject:
   - component: {fileID: 709994834}
   - component: {fileID: 709994835}
   - component: {fileID: 709994836}
+  - component: {fileID: 709994837}
   m_Layer: 3
   m_Name: Bow
   m_TagString: Untagged
@@ -2188,6 +2370,22 @@ MonoBehaviour:
   bullet: {fileID: 1815020073}
   bulletSprite: {fileID: 810009888}
   SelfAudioSource: {fileID: 709994834}
+--- !u!114 &709994837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709994831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.Bow
 --- !u!1 &758134226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,6 +2691,7 @@ RectTransform:
   m_Children:
   - {fileID: 1690474485}
   - {fileID: 1373036429}
+  - {fileID: 616141798}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2512,9 +2711,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a588cd9c369228543ab567e63c96fa04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverPanel: {fileID: 1690474484}
-  reStartButton: {fileID: 110368153}
-  hpText: {fileID: 1373036430}
+  Namespace: GameRuntime.UI
+  ScriptName: GameUi
+  ScriptsFolder: Assets\Scripts\Game\UI
+  GeneratePrefab: 0
+  PrefabFolder: Assets/Art/Prefab
+  ArchitectureFullTypeName: 
+  ViewControllerFullTypeName: 
+  GameOver: {fileID: 1690474486}
+  reStart: {fileID: 110368153}
+  curHp: {fileID: 1373036430}
+  bulletCount: {fileID: 616141799}
 --- !u!1 &948593756
 GameObject:
   m_ObjectHideFlags: 0
@@ -3698,6 +3905,7 @@ GameObject:
   - component: {fileID: 1373036429}
   - component: {fileID: 1373036431}
   - component: {fileID: 1373036430}
+  - component: {fileID: 1373036432}
   m_Layer: 5
   m_Name: curHp
   m_TagString: Untagged
@@ -3766,6 +3974,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1373036428}
   m_CullTransparentMesh: 1
+--- !u!114 &1373036432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373036428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: curHp
+  CustomComment: 
+  mComponentName: UnityEngine.UI.Text
 --- !u!1 &1411573929
 GameObject:
   m_ObjectHideFlags: 0
@@ -3865,6 +4089,7 @@ GameObject:
   - component: {fileID: 1508696834}
   - component: {fileID: 1508696835}
   - component: {fileID: 1508696836}
+  - component: {fileID: 1508696837}
   m_Layer: 3
   m_Name: MP5
   m_TagString: Untagged
@@ -4024,6 +4249,22 @@ MonoBehaviour:
   Binds:
   - MemberName: SelfAudioSource
     Object: {fileID: 1508696835}
+--- !u!114 &1508696837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508696832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.MP5
 --- !u!1 &1584285247
 GameObject:
   m_ObjectHideFlags: 0
@@ -4742,6 +4983,7 @@ GameObject:
   - component: {fileID: 1717028030}
   - component: {fileID: 1717028031}
   - component: {fileID: 1717028032}
+  - component: {fileID: 1717028033}
   m_Layer: 3
   m_Name: Laser
   m_TagString: Untagged
@@ -5012,6 +5254,22 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1717028033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717028026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.Laser
 --- !u!1 &1786974236
 GameObject:
   m_ObjectHideFlags: 0
@@ -5475,12 +5733,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ceb255244b4a97498218cf68ee163e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Namespace: GameRuntime.Actor
+  ScriptName: Player
+  ScriptsFolder: Assets/Scripts/Game
+  GeneratePrefab: 0
+  PrefabFolder: Assets/Art/Prefab
+  ArchitectureFullTypeName: 
+  ViewControllerFullTypeName: 
   sprite: {fileID: 758134228}
   rb: {fileID: 0}
   weapon: {fileID: 1225789478}
-  gun: {fileID: 2051419724}
+  gun: {fileID: 1508696834}
   isfireHold: 0
+  guns: []
+  currentGunIndex: 0
   moveInput: {x: 0, y: 0}
+  Pistol: {fileID: 346689502}
+  MP5: {fileID: 1508696834}
+  ShotGun: {fileID: 380954085}
+  AK: {fileID: 70192283}
+  AWP: {fileID: 105132126}
+  Laser: {fileID: 1717028031}
+  Bow: {fileID: 709994836}
+  RocketGun: {fileID: 2051419724}
 --- !u!4 &1868368660
 Transform:
   m_ObjectHideFlags: 0
@@ -5887,6 +6162,7 @@ GameObject:
   - component: {fileID: 2051419722}
   - component: {fileID: 2051419723}
   - component: {fileID: 2051419724}
+  - component: {fileID: 2051419725}
   m_Layer: 3
   m_Name: RocketGun
   m_TagString: Untagged
@@ -6047,6 +6323,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f89dd62a826f77e42ac07dd4f52164fe, type: 3}
   bullet: {fileID: 348011234}
   SelfAudioSource: {fileID: 2051419722}
+--- !u!114 &2051419725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051419719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: AK
+  CustomComment: 
+  mComponentName: GameRuntime.Weapon.RocketGun
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

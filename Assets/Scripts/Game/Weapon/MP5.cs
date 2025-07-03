@@ -1,3 +1,4 @@
+using GameRuntime.UI;
 using Lab;
 using QFramework;
 using UnityEngine;
@@ -15,10 +16,17 @@ namespace GameRuntime.Weapon
         //protected override float fireRate => 0.1f;
         private ShootDuration shootDuration = new ShootDuration(0.1f);
 
+        private GunClip clip = new GunClip(30);
+
+
+        private void OnEnable()
+        {
+            GameUi.Instance.ShowBulletNum(clip);
+        }
 
         public override void FireDown(Vector2 dir)
         {
-            base.FireDown(dir);
+            Shoot(dir);
 
         }
 
@@ -34,16 +42,27 @@ namespace GameRuntime.Weapon
 
         protected override void Shoot(Vector2 dir)
         {
-            if ((shootDuration.CanShoot()))
+            if (shootDuration.CanShoot() && clip.canShoot)
             {
                 base.Shoot(dir);
                 shootDuration.Reset();
+                clip.useBullet();
                 if (!AudioSource.isPlaying)
                 {
                     AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
                     AudioSource.Play();
                 }
             }
+            if (!clip.canShoot)
+            {
+                AudioSource.Stop();
+
+            }
+        }
+
+        public override void Reload()
+        {
+            clip.Reset();
         }
     }
 }

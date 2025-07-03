@@ -1,16 +1,15 @@
+using GameRuntime.Weapon;
+using QFramework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Lab
+namespace GameRuntime.UI
 {
-    public class GameUi : MonoBehaviour
+    public partial class GameUi : ViewController
     {
         public static GameUi Instance;
 
-        public GameObject gameOverPanel;
-        public Button reStartButton;
-        public Text hpText;
 
         private void Awake()
         {
@@ -20,31 +19,36 @@ namespace Lab
 
         private void Start()
         {
-            reStartButton.onClick.AddListener(() =>
+            reStart.onClick.AddListener(() =>
             {
                 Global.ReStart();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                Time.timeScale = 1; // ÖØÖÃÊ±¼äËõ·Å
+                Time.timeScale = 1; // é‡ç½®æ—¶é—´ç¼©æ”¾
             });
             ShowHp();
-            Global.hpChange += ShowHp; // ¶©ÔÄÑªÁ¿±ä»¯ÊÂ¼ş
+            Global.hpChange += ShowHp; // è®¢é˜…è¡€é‡å˜åŒ–äº‹ä»¶
 
         }
 
         private void OnDestroy()
         {
-            Global.hpChange -= ShowHp; // È¡Ïû¶©ÔÄÑªÁ¿±ä»¯ÊÂ¼ş
+            Global.hpChange -= ShowHp; // å–æ¶ˆè®¢é˜…è¡€é‡å˜åŒ–äº‹ä»¶
         }
 
         public void ShowGameOverPanel()
         {
-            Time.timeScale = 0; // ÔİÍ£ÓÎÏ·
-            gameOverPanel?.SetActive(true);
+            Time.timeScale = 0; // æš‚åœæ¸¸æˆ
+            GameOver?.gameObject?.SetActive(true);
         }
 
         public void ShowHp()
         {
-            hpText.text = "Hp: " + Global.currentHp;
+            curHp.text = "Hp: " + Global.currentHp;
+        }
+
+        public void ShowBulletNum(GunClip clip)
+        {
+            bulletCount.text = $"å­å¼¹æ•°é‡ï¼š{clip.currentBulletNum}/{clip.totalBulletNum}ï¼ˆRé”®é‡ç½®ï¼‰";
         }
     }
 

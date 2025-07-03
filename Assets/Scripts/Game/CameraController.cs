@@ -5,7 +5,7 @@ namespace Lab
 {
     public class CameraController : MonoBehaviour
     {
-        public float smoothTime = 5f; // Æ½»¬Ê±¼ä
+        public float smoothTime = 5f; // å¹³æ»‘æ—¶é—´
 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,7 +22,7 @@ namespace Lab
                 Vector3 startPos = Camera.main.transform.position;
                 Vector3 targetPos = Global.Player.transform.position;
                 Vector3 curPos = Vector3.Lerp(startPos, targetPos, 1 - Mathf.Exp(-Time.deltaTime* smoothTime));
-                curPos.z = startPos.z; // ±£³ÖÏà»úµÄZÖáÎ»ÖÃ²»±ä
+                curPos.z = startPos.z; // ä¿æŒç›¸æœºçš„Zè½´ä½ç½®ä¸å˜
                 transform.position = curPos;
             }
             else

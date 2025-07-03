@@ -35,6 +35,7 @@ namespace GameRuntime.Weapon
         }
 
 
+        public virtual void Reload() { }
 
         protected virtual void Shoot(Vector2 dir)
         {
@@ -54,7 +55,6 @@ namespace GameRuntime.Weapon
             AudioSource.Play();
 
         }
-
 
 
 

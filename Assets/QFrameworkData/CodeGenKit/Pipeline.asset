@@ -19,14 +19,32 @@ MonoBehaviour:
     From: 0
     NameToFullName: []
     BindInfos:
-    - TypeName: UnityEngine.GameObject
-      PathToRoot: bullet
-      MemberName: bullet
-    - TypeName: UnityEngine.GameObject
-      PathToRoot: bulletSprite
-      MemberName: bulletSprite
-    ScriptsFolder: Assets/Scripts/Game/Weapon
-    ClassName: Bow
-    Namespace: GameRuntime.Weapon
+    - TypeName: GameRuntime.Weapon.Pistol
+      PathToRoot: Weapon/Pistol
+      MemberName: Pistol
+    - TypeName: GameRuntime.Weapon.MP5
+      PathToRoot: Weapon/MP5
+      MemberName: MP5
+    - TypeName: GameRuntime.Weapon.ShotGun
+      PathToRoot: Weapon/ShotGun
+      MemberName: ShotGun
+    - TypeName: GameRuntime.Weapon.AK
+      PathToRoot: Weapon/AK
+      MemberName: AK
+    - TypeName: GameRuntime.Weapon.AWP
+      PathToRoot: Weapon/AWP
+      MemberName: AWP
+    - TypeName: GameRuntime.Weapon.Laser
+      PathToRoot: Weapon/Laser
+      MemberName: Laser
+    - TypeName: GameRuntime.Weapon.Bow
+      PathToRoot: Weapon/Bow
+      MemberName: Bow
+    - TypeName: GameRuntime.Weapon.RocketGun
+      PathToRoot: Weapon/RocketGun
+      MemberName: RocketGun
+    ScriptsFolder: Assets/Scripts/Game
+    ClassName: Player
+    Namespace: GameRuntime.Actor
     MainCode: 
     DesignerCode: 

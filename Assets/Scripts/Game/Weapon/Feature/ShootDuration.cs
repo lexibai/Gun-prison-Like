@@ -6,16 +6,16 @@ namespace GameRuntime.Weapon
     public class ShootDuration
     {
         
-        //上次射击时间
+        //涓婃灏勫嚮鏃堕棿
         private float lastTime;
 
         /// <summary>
-        /// 设计间隔时间
+        /// 璁捐闂撮殧鏃堕棿
         /// </summary>
         private float waitTime;
 
         /// <summary>
-        /// 初始化，设置射击间隔时间
+        /// 鍒濆鍖栵紝璁剧疆灏勫嚮闂撮殧鏃堕棿
         /// </summary>
         /// <param name="waitTime"></param>
         public ShootDuration(float waitTime)
@@ -25,7 +25,7 @@ namespace GameRuntime.Weapon
         }
 
         /// <summary>
-        /// 是否可以射击
+        /// 鏄惁鍙互灏勫嚮
         /// </summary>
         /// <returns></returns>
         public bool CanShoot()

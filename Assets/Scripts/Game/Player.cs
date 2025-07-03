@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using GameRuntime.Weapon;
+using GameRuntime.UI;
+using System.Reflection;
+using QFramework;
+using System.Collections.Generic;
 
-namespace Lab
+namespace GameRuntime.Actor
 {
-    public class Player : MonoBehaviour, ICanHurt
+    public partial class Player : ViewController, ICanHurt
     {
         public PlayerController playerController;
         public SpriteRenderer sprite;
@@ -13,15 +17,29 @@ namespace Lab
         public AbstractGun gun;
         public bool isfireHold = false;
 
+        public List<AbstractGun> guns = new();
+        public int currentGunIndex = 0;
 
         public Vector2 moveInput = new Vector2(0, 0);
+
+        private void Awake()
+        {
+            guns.Add(this.Pistol);
+            guns.Add(this.MP5);
+            guns.Add(this.ShotGun);
+            guns.Add(this.AK);
+            guns.Add(this.AWP);
+            guns.Add(this.Laser);
+            guns.Add(this.Bow);
+            guns.Add(this.RocketGun);
+        }
 
         void Start()
         {
             rb = GetComponent<Rigidbody2D>();
 
             playerController = new PlayerController();
-            playerController.Enable(); // ÆôÓÃÊäÈë
+            playerController.Enable(); // å¯ç”¨è¾“å…¥
             playerController.Player.Move.performed += Move;
             playerController.Player.Move.canceled += context =>
             {
@@ -29,17 +47,25 @@ namespace Lab
             };
             playerController.Player.Attack.performed += context =>
             {
-                //print("¿ªÆô"+isfireHold);
+                //print("å¼€å¯"+isfireHold);
                 isfireHold = true;
                 gun.FireDown(LookDir());
             };
             playerController.Player.Attack.canceled += context =>
             {
-                //print("¹Ø±Õ"+isfireHold);
+                //print("å…³é—­"+isfireHold);
                 isfireHold = false;
                 gun.FireUp(LookDir());
             };
-            gun.gameObject.SetActive(true);
+            playerController.Player.ReClip.performed += context =>
+            {
+                gun.Reload();
+            };
+            playerController.Player.CutGun.performed += context =>
+            {
+                CutGun();
+            };
+            CutGun();
         }
 
         private void Move(InputAction.CallbackContext ctx)
@@ -57,32 +83,32 @@ namespace Lab
 
         private void OnEnable()
         {
-            playerController?.Enable(); // È·±£ÔÚÆôÓÃÊ±ÊäÈë±»ÆôÓÃ
+            playerController?.Enable(); // ç¡®ä¿åœ¨å¯ç”¨æ—¶è¾“å…¥è¢«å¯ç”¨
         }
 
 
         private void OnDisable()
         {
-            playerController?.Disable(); // È·±£ÔÚ½ûÓÃÊ±ÊäÈë±»½ûÓÃ
+            playerController?.Disable(); // ç¡®ä¿åœ¨ç¦ç”¨æ—¶è¾“å…¥è¢«ç¦ç”¨
         }
 
         void OnDestroy()
         {
 
-            playerController?.Disable(); // È·±£ÔÚÏú»ÙÊ±ÊäÈë±»½ûÓÃ
+            playerController?.Disable(); // ç¡®ä¿åœ¨é”€æ¯æ—¶è¾“å…¥è¢«ç¦ç”¨
 
         }
 
         void Update()
         {
             //transform.position += new Vector3(moveInput.x, moveInput.y, 0) * Time.deltaTime;
-            rb.linearVelocity = moveInput.normalized * 5f; // ÉèÖÃ¸ÕÌåËÙ¶È
+            rb.linearVelocity = moveInput.normalized * 5f; // è®¾ç½®åˆšä½“é€Ÿåº¦
 
             Vector2 direction = LookDir();
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            weapon.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // µ÷ÕûÎäÆ÷³¯Ïò
+            weapon.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // è°ƒæ•´æ­¦å™¨æœå‘
 
-            weapon.localScale = new Vector3(1, direction.x > 0 ? 1 : -1,  1); // ¸ù¾ÝÊó±êÎ»ÖÃµ÷ÕûÎäÆ÷Ëõ·Å
+            weapon.localScale = new Vector3(1, direction.x > 0 ? 1 : -1, 1); // æ ¹æ®é¼ æ ‡ä½ç½®è°ƒæ•´æ­¦å™¨ç¼©æ”¾
 
             //print(isfireHold);
             if (isfireHold)
@@ -97,6 +123,18 @@ namespace Lab
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
             Vector2 direction = (mouseWorldPos - transform.position);
             return direction;
+        }
+
+
+        private void CutGun()
+        {
+            gun.gameObject.SetActive(false);
+            gun = guns[currentGunIndex++];
+            gun.gameObject.SetActive(true);
+            if (currentGunIndex >= guns.Count)
+            {
+                currentGunIndex = 0;
+            }
         }
 
         public void Hurt(int damage)
