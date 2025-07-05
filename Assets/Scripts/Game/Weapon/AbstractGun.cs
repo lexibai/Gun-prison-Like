@@ -17,7 +17,11 @@ namespace GameRuntime.Weapon
 
         public AudioClip ReloadAudioSource;
 
+        public virtual BulletBag BulletBag { get; set; }
+
         public abstract bool Reseting { get; }
+
+        public virtual int damage { get; }
 
 
         public virtual void OnEquip()

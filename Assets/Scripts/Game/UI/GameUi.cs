@@ -1,3 +1,4 @@
+using GameRuntime.Actor;
 using GameRuntime.Weapon;
 using QFramework;
 using UnityEngine;
@@ -48,7 +49,9 @@ namespace GameRuntime.UI
 
         public void ShowBulletNum(GunClip clip)
         {
-            bulletCount.text = $"子弹数量：{clip.currentBulletNum}/{clip.totalBulletNum}（R键重置）";
+            BulletBag bulletBag = Player.Instance.gun.BulletBag;
+            string bag = bulletBag.isInfinite ? "(∞)" : $"({bulletBag.currentBullet}/{bulletBag.totleBullet})";
+            bulletCount.text = $"子弹数量：{clip.currentBulletNum}/{clip.totalBulletNum}{bag}（R键重置）";
         }
     }
 

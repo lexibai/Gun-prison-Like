@@ -8,6 +8,7 @@ namespace GameRuntime.Weapon
         public bool isInit = false;
         public Vector2 dir = Vector2.zero;
         public Rigidbody2D rb;
+        public int damage = 1;
         public string target = "";
 
         public void Init(Vector2 dir, string target)
@@ -38,7 +39,7 @@ namespace GameRuntime.Weapon
                 if (collision.gameObject.CompareTag(target))
                 {
                     Destroy(gameObject);
-                    collision.gameObject.GetComponent<ICanHurt>()?.Hurt(1);
+                    collision.gameObject.GetComponent<ICanHurt>()?.Hurt(damage);
                 }
                 else
                 {

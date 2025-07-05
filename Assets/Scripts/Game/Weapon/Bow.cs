@@ -15,6 +15,10 @@ namespace GameRuntime.Weapon
         protected float fireRate = 3f; // 每次射击间隔时间
         protected float fireTime = 0; // 每次射击间隔时间
 
+        public override BulletBag BulletBag { get; set; } = new BulletBag(500);
+
+
+
         private GunClip clip = new GunClip(100);
         public override void OnEquip()
         {
@@ -63,7 +67,7 @@ namespace GameRuntime.Weapon
         public override void Reload()
         {
             base.Reload();
-            clip.Reset(ReloadAudioSource);
+            BulletBag.Reset(clip, ReloadAudioSource);
         }
     }
 }

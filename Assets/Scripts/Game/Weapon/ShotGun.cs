@@ -21,6 +21,10 @@ namespace GameRuntime.Weapon
 
         private ShootLight shootLight = new ShootLight();
 
+        public override BulletBag BulletBag { get; set; } = new BulletBag(500);
+
+
+
         public override void OnEquip()
         {
             base.OnEquip();
@@ -73,7 +77,7 @@ namespace GameRuntime.Weapon
         public override void Reload()
         {
             base.Reload();
-            clip.Reset(ReloadAudioSource);
+            BulletBag.Reset(clip, ReloadAudioSource);
         }
 
     }

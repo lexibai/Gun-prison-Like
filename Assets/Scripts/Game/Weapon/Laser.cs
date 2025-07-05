@@ -12,6 +12,10 @@ namespace GameRuntime.Weapon
 
         private ShootLight shootLight = new ShootLight();
 
+        public override BulletBag BulletBag { get; set; } = new BulletBag(-1);
+
+
+
         public bool isFiring = false;
 
         public override bool Reseting => false;

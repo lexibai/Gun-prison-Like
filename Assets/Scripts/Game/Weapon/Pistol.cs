@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GameRuntime.UI;
 using NUnit.Framework;
@@ -21,6 +22,13 @@ namespace GameRuntime.Weapon
         private ShootLight shootLight = new ShootLight();
 
         private GunClip clip = new GunClip(10);
+
+        public override BulletBag BulletBag { get; set; } = new BulletBag(100);
+
+
+
+
+
         public override void OnEquip()
         {
             base.OnEquip();
@@ -53,7 +61,7 @@ namespace GameRuntime.Weapon
         public override void Reload()
         {
             base.Reload();
-            clip.Reset(ReloadAudioSource);
+            BulletBag.Reset(clip, ReloadAudioSource);
         }
     }
 }

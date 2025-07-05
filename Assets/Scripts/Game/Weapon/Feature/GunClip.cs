@@ -14,6 +14,8 @@ namespace GameRuntime.Weapon
 
         public bool canShoot => currentBulletNum > 0 && !Reseting;
 
+        public int needBulletNum => totalBulletNum - currentBulletNum;
+
         public GunClip(int initBulletNum)
         {
             totalBulletNum = initBulletNum;
@@ -26,14 +28,18 @@ namespace GameRuntime.Weapon
             GameUi.Instance.ShowBulletNum(this);
         }
 
-        public void Reset(AudioClip resetAudioClip)
+        public void Reset(AudioClip resetAudioClip, int bulletNum = -1)
         {
+            if (bulletNum == -1)
+            {
+                bulletNum = totalBulletNum;
+            }
             if (!Reseting)
             {
                 Reseting = true;
                 ActionKit.Sequence().PlaySound(resetAudioClip).Delay(0.5f).Callback(() =>
                 {
-                    currentBulletNum = totalBulletNum;
+                    currentBulletNum += bulletNum;
                     GameUi.Instance.ShowBulletNum(this);
                     Reseting = false;
                 }).StartCurrentScene();

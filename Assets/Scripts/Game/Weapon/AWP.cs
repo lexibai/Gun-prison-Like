@@ -14,6 +14,9 @@ namespace GameRuntime.Weapon
 
         public override bool Reseting => clip.Reseting;
 
+        public override BulletBag BulletBag { get; set; } = new BulletBag(500);
+
+
         private ShootDuration shootDuration = new ShootDuration(3f);
         private GunClip clip = new GunClip(10);
         private ShootLight shootLight = new ShootLight();
@@ -49,7 +52,7 @@ namespace GameRuntime.Weapon
         public override void Reload()
         {
             base.Reload();
-            clip.Reset(ReloadAudioSource);
+            BulletBag.Reset(clip, ReloadAudioSource);
         }
 
     }

@@ -25,6 +25,9 @@ namespace GameRuntime.Actor
 
         public Vector2 moveInput = new Vector2(0, 0);
 
+        public List<AudioClip> audioClips = new List<AudioClip>();
+        private AudioClip cutGunAudioClip => audioClips[Random.Range(0, audioClips.Count)];
+
         private void Awake()
         {
             _instance = this;
@@ -37,6 +40,13 @@ namespace GameRuntime.Actor
             guns.Add(this.Laser);
             guns.Add(this.Bow);
             guns.Add(this.RocketGun);
+
+
+            audioClips.Add(this.GunTake1);
+            audioClips.Add(this.GunTake2);
+            audioClips.Add(this.GunTake3);
+            audioClips.Add(this.GunTake4);
+            audioClips.Add(this.GunTake5);
         }
 
         void Start()
@@ -76,14 +86,14 @@ namespace GameRuntime.Actor
         private void Move(InputAction.CallbackContext ctx)
         {
             moveInput = ctx.ReadValue<Vector2>();
-            if (moveInput.x < 0)
-            {
-                sprite.flipX = true;
-            }
-            if (moveInput.x > 0)
-            {
-                sprite.flipX = false;
-            }
+            // if (moveInput.x < 0)
+            // {
+            //     sprite.flipX = true;
+            // }
+            // if (moveInput.x > 0)
+            // {
+            //     sprite.flipX = false;
+            // }
         }
 
         private void OnEnable()
@@ -111,6 +121,7 @@ namespace GameRuntime.Actor
             weapon.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // 调整武器朝向
 
             weapon.localScale = new Vector3(1, direction.x > 0 ? 1 : -1, 1); // 根据鼠标位置调整武器缩放
+            sprite.flipX = direction.x < 0; // 根据鼠标位置调整人物朝向
 
             //print(isfireHold);
             if (isfireHold)
@@ -141,7 +152,8 @@ namespace GameRuntime.Actor
                 {
                     currentGunIndex = 0;
                 }
-
+                this.SelfAudioSource.clip = cutGunAudioClip;
+                this.SelfAudioSource.Play();
             }
         }
 
