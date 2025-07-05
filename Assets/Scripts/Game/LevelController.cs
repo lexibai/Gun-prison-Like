@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Lab
+namespace GameRuntime.Scene
 {
     public class LevelController : MonoBehaviour
     {
@@ -17,25 +17,26 @@ namespace Lab
 
         [System.NonSerialized]
         public List<string> startCfg;
+
         [System.NonSerialized]
         public List<string> normalCfg;
+
         [System.NonSerialized]
         public List<string> finishCfg;
 
-        private TileBase wallTile { 
-            get { 
-                return wallTiles[Random.Range(0,4)];
-            } 
+        private TileBase wallTile
+        {
+            get { return wallTiles[Random.Range(0, 4)]; }
         }
-        private TileBase floorTile {
-            get { 
-                return floorTiles[Random.Range(0, 4)];
-            }
+        private TileBase floorTile
+        {
+            get { return floorTiles[Random.Range(0, 4)]; }
         }
 
         void Start()
         {
-            startCfg = new() {
+            startCfg = new()
+            {
                 "0000000000000000000",
                 "0                 0",
                 "0                 0",
@@ -57,7 +58,8 @@ namespace Lab
                 "0000000000000000000",
             };
 
-            normalCfg = new() {
+            normalCfg = new()
+            {
                 "0000000000000000000",
                 "0                 0",
                 "0  #           #  0",
@@ -79,7 +81,8 @@ namespace Lab
                 "0000000000000000000",
             };
 
-            finishCfg = new() {
+            finishCfg = new()
+            {
                 "0000000000",
                 "0        0",
                 "0        0",
@@ -94,13 +97,9 @@ namespace Lab
             };
 
             GenerateRoom(Vector2.zero, startCfg);
-            GenerateRoom(Vector2.zero + (Vector2.right * (startCfg[0].Length+2)), normalCfg);
-            GenerateRoom(new Vector2(startCfg[0].Length + normalCfg[0].Length + 4, - 4), finishCfg);
-
-
-
+            GenerateRoom(Vector2.zero + (Vector2.right * (startCfg[0].Length + 2)), normalCfg);
+            GenerateRoom(new Vector2(startCfg[0].Length + normalCfg[0].Length + 4, -4), finishCfg);
         }
-
 
         /// <summary>
         /// O 表示墙壁
@@ -110,7 +109,7 @@ namespace Lab
         /// </summary>
         /// <param name="offset">偏移量</param>
         /// <param name="roomCfg">房间配置</param>
-        public void GenerateRoom(Vector2 offset ,List<string> roomCfg)
+        public void GenerateRoom(Vector2 offset, List<string> roomCfg)
         {
             for (int y = 0; y < roomCfg.Count; y++)
             {
@@ -131,7 +130,6 @@ namespace Lab
                         player.transform.position = playerPosition;
                         player.gameObject.SetActive(true); // 确保玩家对象处于激活状态
                         Global.Player = player; // 将玩家对象存储到全局变量中
-
                     }
                     else if (roomCfg[y][x] == '#')
                     {
@@ -154,10 +152,6 @@ namespace Lab
             }
         }
 
-        void Update()
-        {
-
-        }
+        void Update() { }
     }
 }
-

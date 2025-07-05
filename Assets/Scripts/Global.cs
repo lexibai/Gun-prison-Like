@@ -1,16 +1,20 @@
 using System;
 using UnityEngine;
 
-public class Global
+namespace GameRuntime
 {
-    public static GameObject Player;
-    public static GameObject Enmpy;
+    public class Global
+    {
+        public static GameObject Player;
+        public static GameObject Enmpy;
 
-    public static int currentHp = 10;
+        public static int currentHp = 10;
 
-    public static Action hpChange;
+        public static Action hpChange;
 
-    public static void ReStart() {
-        currentHp = 10;
+        public static void ReStart()
+        {
+            currentHp = 10;
+        }
     }
 }

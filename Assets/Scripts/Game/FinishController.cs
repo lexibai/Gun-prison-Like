@@ -1,16 +1,17 @@
-using Lab;
-using UnityEngine;
-using GameRuntime.UI;
 using GameRuntime.Actor;
+using GameRuntime.UI;
+using UnityEngine;
 
-
-public class FinishController : MonoBehaviour
+namespace GameRuntime
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class FinishController : MonoBehaviour
     {
-        if (collision.GetComponent<Player>())
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            GameUi.Instance.ShowGameOverPanel();
+            if (collision.GetComponent<Player>())
+            {
+                GameUi.Instance.ShowGameOverPanel();
+            }
         }
     }
 }

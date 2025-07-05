@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace Lab
+namespace GameRuntime.Scene
 {
     public class CameraController : MonoBehaviour
     {

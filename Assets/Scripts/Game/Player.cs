@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Reflection;
+using GameRuntime.UI;
+using GameRuntime.Weapon;
+using QFramework;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using GameRuntime.Weapon;
-using GameRuntime.UI;
-using System.Reflection;
-using QFramework;
-using System.Collections.Generic;
 
 namespace GameRuntime.Actor
 {
@@ -86,7 +86,6 @@ namespace GameRuntime.Actor
             playerController?.Enable(); // 确保在启用时输入被启用
         }
 
-
         private void OnDisable()
         {
             playerController?.Disable(); // 确保在禁用时输入被禁用
@@ -94,9 +93,7 @@ namespace GameRuntime.Actor
 
         void OnDestroy()
         {
-
             playerController?.Disable(); // 确保在销毁时输入被禁用
-
         }
 
         void Update()
@@ -120,11 +117,12 @@ namespace GameRuntime.Actor
         private Vector2 LookDir()
         {
             Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(
+                new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane)
+            );
             Vector2 direction = (mouseWorldPos - transform.position);
             return direction;
         }
-
 
         private void CutGun()
         {
@@ -147,6 +145,4 @@ namespace GameRuntime.Actor
             }
         }
     }
-
 }
-

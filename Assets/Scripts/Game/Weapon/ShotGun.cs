@@ -1,6 +1,5 @@
 using UnityEngine;
 using QFramework;
-using Lab;
 using GameRuntime.UI;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间

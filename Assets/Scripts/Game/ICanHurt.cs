@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface ICanHurt
+namespace GameRuntime.Actor
 {
-    void Hurt(int damage);
+    public interface ICanHurt
+    {
+        void Hurt(int damage);
+    }
 }

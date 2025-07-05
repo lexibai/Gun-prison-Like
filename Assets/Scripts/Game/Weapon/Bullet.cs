@@ -1,3 +1,4 @@
+using GameRuntime.Actor;
 using UnityEngine;
 
 namespace GameRuntime.Weapon
@@ -44,7 +45,7 @@ namespace GameRuntime.Weapon
                     Destroy(gameObject);
                 }
             }
-            
+
         }
     }
 }

@@ -1,8 +1,7 @@
+using System.Collections.Generic;
 using GameRuntime.UI;
-using Lab;
 using NUnit.Framework;
 using QFramework;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameRuntime.Weapon
@@ -12,7 +11,6 @@ namespace GameRuntime.Weapon
     /// </summary>
     public partial class Pistol : AbstractGun
     {
-
         public override AudioSource AudioSource => SelfAudioSource;
         public override GameObject Bullet => bullet;
         private ShootDuration shootDuration = new ShootDuration(0.3f);
@@ -23,7 +21,6 @@ namespace GameRuntime.Weapon
         {
             GameUi.Instance.ShowBulletNum(clip);
         }
-
 
         public override void FireDown(Vector2 dir)
         {
@@ -50,5 +47,4 @@ namespace GameRuntime.Weapon
             clip.Reset();
         }
     }
-
 }

@@ -2,7 +2,7 @@ using GameRuntime.Weapon;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Lab
+namespace GameRuntime.Actor
 {
     public class Enemy : MonoBehaviour, ICanHurt
     {
@@ -49,7 +49,7 @@ namespace Lab
                     return;
                 }
                 Vector3 dir = Global.Player.transform.position - transform.position;
-                rb.linearVelocity = dir.normalized * 1f; // ÉèÖÃ¸ÕÌåËÙ¶È
+                rb.linearVelocity = dir.normalized * 1f; // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
                 if (sprite)
                 {
                     if (dir.x < 0)

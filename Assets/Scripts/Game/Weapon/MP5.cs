@@ -1,5 +1,4 @@
 using GameRuntime.UI;
-using Lab;
 using QFramework;
 using UnityEngine;
 
@@ -18,7 +17,6 @@ namespace GameRuntime.Weapon
 
         private GunClip clip = new GunClip(30);
 
-
         private void OnEnable()
         {
             GameUi.Instance.ShowBulletNum(clip);
@@ -27,7 +25,6 @@ namespace GameRuntime.Weapon
         public override void FireDown(Vector2 dir)
         {
             Shoot(dir);
-
         }
 
         public override void FireHold(Vector2 dir)
@@ -56,7 +53,6 @@ namespace GameRuntime.Weapon
             if (!clip.canShoot)
             {
                 AudioSource.Stop();
-
             }
         }
 
