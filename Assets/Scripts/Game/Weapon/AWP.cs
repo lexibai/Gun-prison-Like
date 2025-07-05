@@ -12,12 +12,15 @@ namespace GameRuntime.Weapon
 
         public override GameObject Bullet => bullet;
 
+        public override bool Reseting => clip.Reseting;
 
         private ShootDuration shootDuration = new ShootDuration(3f);
         private GunClip clip = new GunClip(10);
+        private ShootLight shootLight = new ShootLight();
 
-        private void OnEnable()
+        public override void OnEquip()
         {
+            base.OnEquip();
             GameUi.Instance.ShowBulletNum(clip);
         }
 
@@ -28,7 +31,7 @@ namespace GameRuntime.Weapon
                 base.FireDown(dir);
                 clip.useBullet();
                 shootDuration.Reset();
-
+                shootLight.useLight();
             }
         }
 
@@ -39,12 +42,14 @@ namespace GameRuntime.Weapon
                 base.FireHold(dir);
                 clip.useBullet();
                 shootDuration.Reset();
+                shootLight.useLight();
             }
         }
 
         public override void Reload()
         {
-            clip.Reset();
+            base.Reload();
+            clip.Reset(ReloadAudioSource);
         }
 
     }

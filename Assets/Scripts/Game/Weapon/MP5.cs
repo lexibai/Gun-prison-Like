@@ -12,15 +12,20 @@ namespace GameRuntime.Weapon
 
         public override GameObject Bullet => bullet;
 
+        public override bool Reseting => clip.Reseting;
+
         //protected override float fireRate => 0.1f;
         private ShootDuration shootDuration = new ShootDuration(0.1f);
 
         private GunClip clip = new GunClip(30);
 
-        private void OnEnable()
+        private ShootLight shootLight = new ShootLight();
+        public override void OnEquip()
         {
+            base.OnEquip();
             GameUi.Instance.ShowBulletNum(clip);
         }
+
 
         public override void FireDown(Vector2 dir)
         {
@@ -44,6 +49,7 @@ namespace GameRuntime.Weapon
                 base.Shoot(dir);
                 shootDuration.Reset();
                 clip.useBullet();
+                shootLight.useLight();
                 if (!AudioSource.isPlaying)
                 {
                     AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
@@ -58,7 +64,8 @@ namespace GameRuntime.Weapon
 
         public override void Reload()
         {
-            clip.Reset();
+            base.Reload();
+            clip.Reset(ReloadAudioSource);
         }
     }
 }

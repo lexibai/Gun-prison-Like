@@ -12,15 +12,14 @@ namespace GameRuntime.Weapon
 
         public override GameObject Bullet => bullet;
 
+        public override bool Reseting => clip.Reseting;
+
         //protected override float fireRate => 0.1f;
         private ShootDuration shootDuration = new ShootDuration(0.1f);
 
         private GunClip clip = new GunClip(60);
 
-        private void OnEnable()
-        {
-            GameUi.Instance.ShowBulletNum(clip);
-        }
+        private ShootLight shootLight = new ShootLight();
 
         public override void FireDown(Vector2 dir)
         {
@@ -32,40 +31,69 @@ namespace GameRuntime.Weapon
                 AudioSource.Play();
                 shootDuration.Reset();
                 clip.useBullet();
+                shootLight.useLight();
             }
         }
 
+        private bool flag = true;
+
+
         public override void FireHold(Vector2 dir)
         {
+            if (clip.currentBulletNum == clip.totalBulletNum)
+            {
+                AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
+                AudioSource.loop = true;
+                AudioSource.Play();
+            }
+
             if (shootDuration.CanShoot() && clip.canShoot)
             {
                 Shoot(dir);
                 shootDuration.Reset();
                 clip.useBullet();
+                shootLight.useLight();
             }
 
             if (!clip.canShoot)
             {
                 AudioSource.Stop();
-                AudioSource.clip = AKShootEnd;
-                AudioSource.loop = false;
-                AudioSource.Play();
-
+                if (flag)
+                {
+                    AudioSource.clip = AKShootEnd;
+                    AudioSource.loop = false;
+                    AudioSource.Play();
+                    flag = false;
+                }
             }
+
         }
 
         public override void FireUp(Vector2 dir)
         {
             //TODO: 声音存在bug，在没有子弹后依旧有停止开枪的声音
             AudioSource.Stop();
-            AudioSource.clip = AKShootEnd;
-            AudioSource.loop = false;
-            AudioSource.Play();
+
+            if (clip.canShoot)
+            {
+                AudioSource.clip = AKShootEnd;
+                AudioSource.loop = false;
+                AudioSource.Play();
+            }
         }
 
         public override void Reload()
         {
-            clip.Reset();
+            base.Reload();
+            clip.Reset(ReloadAudioSource);
+            flag = true;
         }
+
+        public override void OnEquip()
+        {
+            base.OnEquip();
+            GameUi.Instance.ShowBulletNum(clip);
+        }
+
     }
 }

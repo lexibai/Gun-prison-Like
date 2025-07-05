@@ -8,8 +8,8 @@ namespace GameRuntime.Weapon
 	public partial class RocketGun
 	{
 		public UnityEngine.GameObject bullet;
-		
+
 		public UnityEngine.AudioSource SelfAudioSource;
-		
+
 	}
 }

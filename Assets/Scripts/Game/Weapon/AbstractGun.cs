@@ -15,6 +15,16 @@ namespace GameRuntime.Weapon
 
         public abstract GameObject Bullet { get; }
 
+        public AudioClip ReloadAudioSource;
+
+        public abstract bool Reseting { get; }
+
+
+        public virtual void OnEquip()
+        {
+
+        }
+
 
         public virtual void FireDown(Vector2 dir)
         {
@@ -34,7 +44,10 @@ namespace GameRuntime.Weapon
         }
 
 
-        public virtual void Reload() { }
+        public virtual void Reload()
+        {
+
+        }
 
         protected virtual void Shoot(Vector2 dir)
         {
@@ -49,10 +62,8 @@ namespace GameRuntime.Weapon
 
         protected virtual void AudioPlay()
         {
-
             AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
             AudioSource.Play();
-
         }
 
 

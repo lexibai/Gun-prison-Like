@@ -10,15 +10,18 @@ namespace GameRuntime.Weapon
     {
         public override AudioSource AudioSource => SelfAudioSource;
         public override GameObject Bullet => bullet;
+
+        public override bool Reseting => clip.Reseting;
         protected float fireRate = 3f; // 每次射击间隔时间
         protected float fireTime = 0; // 每次射击间隔时间
 
         private GunClip clip = new GunClip(100);
-
-        private void OnEnable()
+        public override void OnEquip()
         {
+            base.OnEquip();
             GameUi.Instance.ShowBulletNum(clip);
         }
+
 
         public override void FireDown(Vector2 dir)
         {
@@ -59,7 +62,8 @@ namespace GameRuntime.Weapon
 
         public override void Reload()
         {
-            clip.Reset();
+            base.Reload();
+            clip.Reset(ReloadAudioSource);
         }
     }
 }

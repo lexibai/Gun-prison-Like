@@ -13,15 +13,20 @@ namespace GameRuntime.Weapon
 
         public override GameObject Bullet => bullet;
 
+        public override bool Reseting => clip.Reseting;
         //protected override float fireRate => 1f;
         private ShootDuration shootDuration = new ShootDuration(1f);
 
         private GunClip clip = new GunClip(5);
 
-        private void OnEnable()
+        private ShootLight shootLight = new ShootLight();
+
+        public override void OnEquip()
         {
+            base.OnEquip();
             GameUi.Instance.ShowBulletNum(clip);
         }
+
 
         protected override void Shoot(Vector2 dir)
         {
@@ -37,7 +42,7 @@ namespace GameRuntime.Weapon
                 angle += 4; // 每次增加4度
             }
 
-
+            shootLight.useLight();
         }
 
 
@@ -67,7 +72,8 @@ namespace GameRuntime.Weapon
 
         public override void Reload()
         {
-            clip.Reset();
+            base.Reload();
+            clip.Reset(ReloadAudioSource);
         }
 
     }

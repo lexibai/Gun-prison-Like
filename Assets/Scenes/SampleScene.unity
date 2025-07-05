@@ -119,6 +119,110 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &20417619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 20417620}
+  - component: {fileID: 20417621}
+  - component: {fileID: 20417622}
+  m_Layer: 3
+  m_Name: GunShootLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &20417620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20417619}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.75, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1225789478}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &20417621
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20417619}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: f50d19bd951857c488f6836babe5f943, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.16, y: 0.16}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &20417622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20417619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: GunShootLight
+  CustomComment: 
+  mComponentName: UnityEngine.GameObject
 --- !u!1 &70192278
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +395,7 @@ MonoBehaviour:
   ViewControllerFullTypeName: 
   fireAudios:
   - {fileID: 8300000, guid: a549e57f7c802f54d9dbf6ae8cab7844, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: 8b60620b728add845aad36bb67910dab, type: 3}
   bullet: {fileID: 1584285247}
   SelfAudioSource: {fileID: 70192281}
   AKShootEnd: {fileID: 8300000, guid: dda222f6a4e65dc40964f21729a9469a, type: 3}
@@ -480,6 +585,7 @@ MonoBehaviour:
   ViewControllerFullTypeName: 
   fireAudios:
   - {fileID: 8300000, guid: b2c7c89817fbbf9488150437ce1b608d, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: c3919f07d6da65a4b8e5806ec28acba2, type: 3}
   bullet: {fileID: 1097536238}
   SelfAudioSource: {fileID: 105132124}
 --- !u!114 &105132127
@@ -957,6 +1063,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0fbbcba7ae1fa384a9b6a0f0b9e27d4a, type: 3}
   - {fileID: 8300000, guid: 5da6b7ebf2d849643919501a73e62240, type: 3}
   - {fileID: 8300000, guid: 9a7ade41ae3282340a1aff96bb54bca9, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: 81a68f8f380eabf4e9a9a6110af58565, type: 3}
   bullet: {fileID: 1237034827}
   SelfAudioSource: {fileID: 346689503}
 --- !u!82 &346689503
@@ -1445,6 +1552,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 849c28b6ba299e44a95e2dfdb16b0e33, type: 3}
   - {fileID: 8300000, guid: 57d5d935baca36449b7c2369f3477d8b, type: 3}
   - {fileID: 8300000, guid: 0667109a8d4d6924f9b2886d5586178b, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: 08af58ec0185ef744a5f27e9b2681152, type: 3}
   bullet: {fileID: 592327346}
   SelfAudioSource: {fileID: 380954083}
 --- !u!114 &380954086
@@ -2367,6 +2475,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b2030a878bd59b04f93c6c824dc33d6b, type: 3}
   - {fileID: 8300000, guid: c21f69025b9412c4d9d2857b7f1a1d4a, type: 3}
   - {fileID: 8300000, guid: 3b72aaf1243d5af40b4dc149d2aef53a, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: 1c1b888062deeb544923ccc12f86841a, type: 3}
   bullet: {fileID: 1815020073}
   bulletSprite: {fileID: 810009888}
   SelfAudioSource: {fileID: 709994834}
@@ -3583,6 +3692,7 @@ Transform:
   - {fileID: 1717028027}
   - {fileID: 709994832}
   - {fileID: 2051419720}
+  - {fileID: 20417620}
   m_Father: {fileID: 1868368660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1237034827
@@ -4135,6 +4245,7 @@ MonoBehaviour:
   ViewControllerFullTypeName: 
   fireAudios:
   - {fileID: 8300000, guid: ff70a83ad7a5e3b4987c7fd34f7607c8, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: be047ce74a6edf04e8821d7a6f5ef3cd, type: 3}
   bullet: {fileID: 1786974236}
   SelfAudioSource: {fileID: 1508696835}
 --- !u!82 &1508696835
@@ -5143,6 +5254,7 @@ MonoBehaviour:
   ViewControllerFullTypeName: 
   fireAudios:
   - {fileID: 8300000, guid: 76d2cd22adb80bb43805e6875cea9bb5, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: be047ce74a6edf04e8821d7a6f5ef3cd, type: 3}
   isFiring: 0
   bullet: {fileID: 1630445140}
   SelfAudioSource: {fileID: 1717028029}
@@ -5756,6 +5868,7 @@ MonoBehaviour:
   Laser: {fileID: 1717028031}
   Bow: {fileID: 709994836}
   RocketGun: {fileID: 2051419724}
+  GunShootLight: {fileID: 20417619}
 --- !u!4 &1868368660
 Transform:
   m_ObjectHideFlags: 0
@@ -6321,6 +6434,7 @@ MonoBehaviour:
   fireAudios:
   - {fileID: 8300000, guid: 2103842d85de9114f9c2b6bf7ba859e6, type: 3}
   - {fileID: 8300000, guid: f89dd62a826f77e42ac07dd4f52164fe, type: 3}
+  ReloadAudioSource: {fileID: 8300000, guid: 81a68f8f380eabf4e9a9a6110af58565, type: 3}
   bullet: {fileID: 348011234}
   SelfAudioSource: {fileID: 2051419722}
 --- !u!114 &2051419725

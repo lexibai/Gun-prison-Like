@@ -1,4 +1,6 @@
 using GameRuntime.UI;
+using QFramework;
+using UnityEngine;
 
 namespace GameRuntime.Weapon
 {
@@ -8,7 +10,9 @@ namespace GameRuntime.Weapon
 
         public int currentBulletNum;
 
-        public bool canShoot => currentBulletNum > 0;
+        public bool Reseting = false;
+
+        public bool canShoot => currentBulletNum > 0 && !Reseting;
 
         public GunClip(int initBulletNum)
         {
@@ -22,10 +26,19 @@ namespace GameRuntime.Weapon
             GameUi.Instance.ShowBulletNum(this);
         }
 
-        public void Reset()
+        public void Reset(AudioClip resetAudioClip)
         {
-            currentBulletNum = totalBulletNum;
-            GameUi.Instance.ShowBulletNum(this);
+            if (!Reseting)
+            {
+                Reseting = true;
+                ActionKit.Sequence().PlaySound(resetAudioClip).Delay(0.5f).Callback(() =>
+                {
+                    currentBulletNum = totalBulletNum;
+                    GameUi.Instance.ShowBulletNum(this);
+                    Reseting = false;
+                }).StartCurrentScene();
+
+            }
         }
     }
 

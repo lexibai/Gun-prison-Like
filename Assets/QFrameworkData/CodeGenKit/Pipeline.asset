@@ -43,6 +43,9 @@ MonoBehaviour:
     - TypeName: GameRuntime.Weapon.RocketGun
       PathToRoot: Weapon/RocketGun
       MemberName: RocketGun
+    - TypeName: UnityEngine.GameObject
+      PathToRoot: Weapon/GunShootLight
+      MemberName: GunShootLight
     ScriptsFolder: Assets/Scripts/Game
     ClassName: Player
     Namespace: GameRuntime.Actor

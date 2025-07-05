@@ -10,6 +10,9 @@ namespace GameRuntime.Actor
 {
     public partial class Player : ViewController, ICanHurt
     {
+        //Player的外部获取
+        private static Player _instance;
+        public static Player Instance => _instance;
         public PlayerController playerController;
         public SpriteRenderer sprite;
         public Rigidbody2D rb;
@@ -24,6 +27,8 @@ namespace GameRuntime.Actor
 
         private void Awake()
         {
+            _instance = this;
+
             guns.Add(this.Pistol);
             guns.Add(this.MP5);
             guns.Add(this.ShotGun);
@@ -126,12 +131,17 @@ namespace GameRuntime.Actor
 
         private void CutGun()
         {
-            gun.gameObject.SetActive(false);
-            gun = guns[currentGunIndex++];
-            gun.gameObject.SetActive(true);
-            if (currentGunIndex >= guns.Count)
+            if (!gun.Reseting)
             {
-                currentGunIndex = 0;
+                gun.gameObject.SetActive(false);
+                gun = guns[currentGunIndex++];
+                gun.gameObject.SetActive(true);
+                gun.OnEquip();
+                if (currentGunIndex >= guns.Count)
+                {
+                    currentGunIndex = 0;
+                }
+
             }
         }
 

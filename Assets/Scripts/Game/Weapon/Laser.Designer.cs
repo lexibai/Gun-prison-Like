@@ -8,10 +8,11 @@ namespace GameRuntime.Weapon
 	public partial class Laser
 	{
 		public UnityEngine.GameObject bullet;
-		
+
 		public UnityEngine.AudioSource SelfAudioSource;
-		
+
 		public UnityEngine.LineRenderer SelfLineRenderer;
-		
+
+
 	}
 }

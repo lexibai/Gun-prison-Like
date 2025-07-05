@@ -8,8 +8,8 @@ namespace GameRuntime.Weapon
 	public partial class MP5
 	{
 		public UnityEngine.GameObject bullet;
-		
+
 		public UnityEngine.AudioSource SelfAudioSource;
-		
+
 	}
 }
