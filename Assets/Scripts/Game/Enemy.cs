@@ -49,7 +49,7 @@ namespace GameRuntime.Actor
                     return;
                 }
                 Vector3 dir = Global.Player.transform.position - transform.position;
-                rb.linearVelocity = dir.normalized * 1f; // ���ø����ٶ�
+                rb.linearVelocity = dir.normalized * 1f;
                 if (sprite)
                 {
                     if (dir.x < 0)

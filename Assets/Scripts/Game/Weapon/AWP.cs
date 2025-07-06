@@ -16,6 +16,7 @@ namespace GameRuntime.Weapon
 
         public override BulletBag BulletBag { get; set; } = new BulletBag(500);
 
+        public override int damage => Random.Range(10, 20);
 
         private ShootDuration shootDuration = new ShootDuration(3f);
         private GunClip clip = new GunClip(10);

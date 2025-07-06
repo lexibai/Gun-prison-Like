@@ -23,6 +23,8 @@ namespace GameRuntime.Weapon
 
         private ShootLight shootLight = new ShootLight();
 
+
+
         public override void FireDown(Vector2 dir)
         {
             if (shootDuration.CanShoot() && clip.canShoot)
@@ -37,13 +39,12 @@ namespace GameRuntime.Weapon
             }
         }
 
-        private bool flag = true;
-
 
         public override void FireHold(Vector2 dir)
         {
             if (clip.currentBulletNum == clip.totalBulletNum)
             {
+                print(1);
                 AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
                 AudioSource.loop = true;
                 AudioSource.Play();
@@ -51,29 +52,30 @@ namespace GameRuntime.Weapon
 
             if (shootDuration.CanShoot() && clip.canShoot)
             {
+                print(2);
                 Shoot(dir);
                 shootDuration.Reset();
                 clip.useBullet();
                 shootLight.useLight();
             }
 
-            if (!clip.canShoot)
+            if (!clip.canShoot && AudioSource.clip != AKShootEnd)
             {
+
                 AudioSource.Stop();
-                if (flag)
-                {
-                    AudioSource.clip = AKShootEnd;
-                    AudioSource.loop = false;
-                    AudioSource.Play();
-                    flag = false;
-                }
+                print(5);
+                print(4);
+                AudioSource.clip = AKShootEnd;
+                AudioSource.loop = false;
+                AudioSource.Play();
+
+
             }
 
         }
 
         public override void FireUp(Vector2 dir)
         {
-            //TODO: 声音存在bug，在没有子弹后依旧有停止开枪的声音
             AudioSource.Stop();
 
             if (clip.canShoot)
@@ -88,7 +90,6 @@ namespace GameRuntime.Weapon
         {
             base.Reload();
             BulletBag.Reset(clip, ReloadAudioSource);
-            flag = true;
         }
 
         public override void OnEquip()
