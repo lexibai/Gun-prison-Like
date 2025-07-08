@@ -1,0 +1,68 @@
+using GameRuntime.Room;
+
+namespace GameRuntime
+{
+    public static class Config
+    {
+        public static RoomConfig startCfg = new RoomConfig()
+            .Type(RoomType.Normal)
+            .L("0000000000000000000")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 D")
+            .L("0      @          D")
+            .L("0                 D")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0000000000000000000");
+
+
+        public static RoomConfig normalCfg = new RoomConfig()
+            .Type(RoomType.Battle)
+            .L("0000000000000000000")
+            .L("0                 0")
+            .L("0  #           #  0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0        ###      0")
+            .L("D       #000#     D")
+            .L("D       #000#     D")
+            .L("D       #000#     D")
+            .L("0        ###      0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0                 0")
+            .L("0  #           #  0")
+            .L("0                 0")
+            .L("0000000000000000000");
+
+        public static RoomConfig finishCfg = new RoomConfig()
+            .Type(RoomType.Finish)
+            .L("0000000000")
+            .L("0        0")
+            .L("0        0")
+            .L("0        0")
+            .L("D        0")
+            .L("D    F   0")
+            .L("D        0")
+            .L("0        0")
+            .L("0        0")
+            .L("0        0")
+            .L("0000000000");
+
+
+    }
+}

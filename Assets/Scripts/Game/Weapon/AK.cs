@@ -44,7 +44,7 @@ namespace GameRuntime.Weapon
         {
             if (clip.currentBulletNum == clip.totalBulletNum)
             {
-                print(1);
+
                 AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
                 AudioSource.loop = true;
                 AudioSource.Play();
@@ -52,7 +52,6 @@ namespace GameRuntime.Weapon
 
             if (shootDuration.CanShoot() && clip.canShoot)
             {
-                print(2);
                 Shoot(dir);
                 shootDuration.Reset();
                 clip.useBullet();
@@ -63,8 +62,6 @@ namespace GameRuntime.Weapon
             {
 
                 AudioSource.Stop();
-                print(5);
-                print(4);
                 AudioSource.clip = AKShootEnd;
                 AudioSource.loop = false;
                 AudioSource.Play();

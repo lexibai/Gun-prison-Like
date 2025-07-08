@@ -70,5 +70,6 @@
   "dotnet.defaultSolution": "Gun-prison-Like.sln",
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
-  }
+  },
+  "editor.formatOnSave": true
 }
