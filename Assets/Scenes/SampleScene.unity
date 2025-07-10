@@ -223,6 +223,102 @@ MonoBehaviour:
   CustomComponentName: GunShootLight
   CustomComment: 
   mComponentName: UnityEngine.GameObject
+--- !u!1 &22330408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 22330409}
+  - component: {fileID: 22330411}
+  - component: {fileID: 22330410}
+  - component: {fileID: 22330412}
+  m_Layer: 3
+  m_Name: info
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &22330409
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22330408}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1797552977}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.2}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &22330410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22330408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 24
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &22330411
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22330408}
+  m_CullTransparentMesh: 1
+--- !u!114 &22330412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22330408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: info
+  CustomComment: 
+  mComponentName: UnityEngine.UI.Text
 --- !u!1 &70192278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,6 +1537,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &348011240
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2092,6 +2189,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &592327352
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2900,6 +2998,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &810009892
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3608,6 +3707,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &1097536244
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4056,6 +4156,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!58 &1237034831
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4762,6 +4863,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &1584285253
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4949,6 +5051,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &1630445146
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5056,6 +5159,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &1631695379
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5771,6 +5875,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &1786974242
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5826,6 +5931,66 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1797552976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1797552977}
+  - component: {fileID: 1797552978}
+  m_Layer: 3
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1797552977
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797552976}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 22330409}
+  m_Father: {fileID: 1868368660}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2, y: 2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &1797552978
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797552976}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 519420031}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 1000
+  m_TargetDisplay: 0
 --- !u!1 &1815020073
 GameObject:
   m_ObjectHideFlags: 0
@@ -5958,6 +6123,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   damage: 1
   target: 
+  speed: 10
 --- !u!212 &1815020079
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6141,6 +6307,7 @@ MonoBehaviour:
   Bow: {fileID: 709994836}
   RocketGun: {fileID: 2051419724}
   GunShootLight: {fileID: 20417619}
+  info: {fileID: 22330410}
   GunTake1: {fileID: 8300000, guid: 5bcdc87b86e984b42b174eb8116202da, type: 3}
   GunTake2: {fileID: 8300000, guid: de117ee6678d84e4a885a2112d908334, type: 3}
   GunTake3: {fileID: 8300000, guid: e087667a6ef663048aa59cd8d92c8570, type: 3}
@@ -6162,6 +6329,7 @@ Transform:
   m_Children:
   - {fileID: 758134227}
   - {fileID: 1225789478}
+  - {fileID: 1797552977}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1868368661

@@ -38,30 +38,61 @@ namespace GameRuntime.Weapon
 
         public override void FireDown(Vector2 dir)
         {
-            if (shootDuration.CanShoot() && clip.canShoot)
+            if (clip.canShoot)
             {
-                base.FireDown(dir);
-                shootDuration.Reset();
-                clip.useBullet();
-                shootLight.useLight();
+                if (shootDuration.CanShoot())
+                {
+                    base.FireDown(dir);
+                    shootDuration.Reset();
+                    clip.useBullet();
+                    shootLight.useLight();
+
+                }
+            }
+            else
+            {
+                Reload();
             }
         }
 
         public override void FireHold(Vector2 dir)
         {
-            if (shootDuration.CanShoot() && clip.canShoot)
+            if (clip.canShoot)
             {
-                base.FireHold(dir);
-                shootDuration.Reset();
-                clip.useBullet();
-                shootLight.useLight();
+                if (shootDuration.CanShoot())
+                {
+                    base.FireDown(dir);
+                    shootDuration.Reset();
+                    clip.useBullet();
+                    shootLight.useLight();
+
+                }
+            }
+            else
+            {
+                Reload();
             }
         }
 
         public override void Reload()
         {
-            base.Reload();
-            BulletBag.Reset(clip, ReloadAudioSource);
+            if (!Reseting)
+            {
+                base.Reload();
+                BulletBag.Reset(clip, ReloadAudioSource);
+            }
         }
+
+        protected override void Shoot(Vector2 dir)
+        {
+            GameObject bulletObj = Instantiate(Bullet);
+            bulletObj.transform.position = Bullet.transform.position;
+            bulletObj.Rotation(Quaternion.AngleAxis(dir.ToAngle(), bulletObj.transform.forward));
+            Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+            playerBullet.speed = 10;
+            playerBullet.damage = 1;
+            playerBullet.Init(dir, "enemy");
+        }
+
     }
 }

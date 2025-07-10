@@ -10,6 +10,7 @@ namespace GameRuntime.Weapon
         public Rigidbody2D rb;
         public int damage = 1;
         public string target = "";
+        public float speed = 10;
 
         public void Init(Vector2 dir, string target)
         {
@@ -25,7 +26,7 @@ namespace GameRuntime.Weapon
         {
             if (isInit)
             {
-                rb.linearVelocity = dir.normalized * 10;
+                rb.linearVelocity = dir.normalized * speed;
             }
 
         }

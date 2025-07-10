@@ -1,4 +1,4 @@
-// Generate Id:08f24f27-a799-43c0-8908-d7a69fd5453b
+// Generate Id:a964f5a4-d52c-4c2f-92ee-194aa61f2e9e
 using UnityEngine;
 
 namespace GameRuntime.Actor
@@ -22,6 +22,8 @@ namespace GameRuntime.Actor
 		public GameRuntime.Weapon.RocketGun RocketGun;
 		
 		public UnityEngine.GameObject GunShootLight;
+		
+		public UnityEngine.UI.Text info;
 		
 		public UnityEngine.AudioClip GunTake1;
 		

@@ -21,14 +21,7 @@ namespace GameRuntime.Room
         public GameObject finishPrefab;
         public GameObject doorPrefab;
 
-        // [System.NonSerialized]
-        // public List<string> startCfg;
 
-        // [System.NonSerialized]
-        // public List<string> normalCfg;
-
-        // [System.NonSerialized]
-        // public List<string> finishCfg;
 
         private TileBase wallTile
         {
@@ -52,70 +45,17 @@ namespace GameRuntime.Room
 
         void Start()
         {
-            // startCfg = new()
-            // {
-            //     "0000000000000000000",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 D",
-            //     "0      @          D",
-            //     "0                 D",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0000000000000000000",
-            // };
-
-            // normalCfg = new()
-            // {
-            //     "0000000000000000000",
-            //     "0                 0",
-            //     "0  #           #  0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0        ###      0",
-            //     "D       #000#     D",
-            //     "D       #000#     D",
-            //     "D       #000#     D",
-            //     "0        ###      0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0                 0",
-            //     "0  #           #  0",
-            //     "0                 0",
-            //     "0000000000000000000",
-            // };
-
-            // finishCfg = new()
-            // {
-            //     "0000000000",
-            //     "0        0",
-            //     "0        0",
-            //     "0        0",
-            //     "D        0",
-            //     "D    F   0",
-            //     "D        0",
-            //     "0        0",
-            //     "0        0",
-            //     "0        0",
-            //     "0000000000",
-            // };
-
-            GenerateRoom(Vector2.zero, Config.startCfg);
-            GenerateRoom(Vector2.zero + (Vector2.right * ( Config.startCfg.RoomWidth + 2)), Config.normalCfg);
-            GenerateRoom(new Vector2(Config.startCfg.RoomWidth + Config.normalCfg.RoomWidth + 4, -4), Config.finishCfg);
+            var offset = Vector2.zero;
+            GenerateRoom(offset, Config.startCfg);
+            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            GenerateRoom(offset, Config.normalCfg.GetRandomItem());
+            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            GenerateRoom(offset, Config.normalCfg.GetRandomItem());
+            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            GenerateRoom(offset, Config.normalCfg.GetRandomItem());
+            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            offset += 4 * Vector2.down;
+            GenerateRoom(offset, Config.finishCfg);
         }
 
         /// <summary>

@@ -21,7 +21,6 @@ namespace GameRuntime.Weapon
 
         public abstract bool Reseting { get; }
 
-        public virtual int damage { get; }
 
 
         public virtual void OnEquip()
@@ -55,13 +54,11 @@ namespace GameRuntime.Weapon
 
         protected virtual void Shoot(Vector2 dir)
         {
-
             GameObject bulletObj = Instantiate(Bullet);
             bulletObj.transform.position = Bullet.transform.position;
             bulletObj.Rotation(Quaternion.AngleAxis(dir.ToAngle(), bulletObj.transform.forward));
             Bullet playerBullet = bulletObj.GetComponent<Bullet>();
             playerBullet.Init(dir, "enemy");
-
         }
 
         protected virtual void AudioPlay()

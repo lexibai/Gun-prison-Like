@@ -42,6 +42,8 @@ namespace GameRuntime.Weapon
                 GameObject bulletObj = Instantiate(Bullet);
                 bulletObj.transform.position = Bullet.transform.position;
                 Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+                playerBullet.speed = 20;
+                playerBullet.damage = 5;
                 playerBullet.Init(angle.AngleToDirection2D(), "enemy");
                 angle += 4; // 每次增加4度
             }
@@ -52,23 +54,39 @@ namespace GameRuntime.Weapon
 
         public override void FireDown(Vector2 dir)
         {
-            if (shootDuration.CanShoot() && clip.canShoot)
+            if (clip.canShoot)
             {
-                base.FireDown(dir);
-                clip.useBullet();
-                shootDuration.Reset();
+                if (shootDuration.CanShoot())
+                {
 
+                    base.FireHold(dir);
+                    clip.useBullet();
+                    shootDuration.Reset();
+                }
+
+            }
+            else
+            {
+                Reload();
             }
         }
 
         public override void FireHold(Vector2 dir)
         {
-            if (shootDuration.CanShoot() && clip.canShoot)
+            if (clip.canShoot)
             {
-                base.FireHold(dir);
-                clip.useBullet();
-                shootDuration.Reset();
+                if (shootDuration.CanShoot())
+                {
 
+                    base.FireHold(dir);
+                    clip.useBullet();
+                    shootDuration.Reset();
+                }
+
+            }
+            else
+            {
+                Reload();
             }
         }
 
@@ -76,8 +94,11 @@ namespace GameRuntime.Weapon
 
         public override void Reload()
         {
-            base.Reload();
-            BulletBag.Reset(clip, ReloadAudioSource);
+            if (!Reseting)
+            {
+                base.Reload();
+                BulletBag.Reset(clip, ReloadAudioSource);
+            }
         }
 
     }

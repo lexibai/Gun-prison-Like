@@ -16,7 +16,6 @@ namespace GameRuntime.Weapon
 
         public override BulletBag BulletBag { get; set; } = new BulletBag(500);
 
-        public override int damage => Random.Range(10, 20);
 
         private ShootDuration shootDuration = new ShootDuration(3f);
         private GunClip clip = new GunClip(10);
@@ -30,30 +29,61 @@ namespace GameRuntime.Weapon
 
         public override void FireDown(Vector2 dir)
         {
-            if (shootDuration.CanShoot() && clip.canShoot)
+            if (clip.canShoot)
             {
-                base.FireDown(dir);
-                clip.useBullet();
-                shootDuration.Reset();
-                shootLight.useLight();
+                if (shootDuration.CanShoot())
+                {
+
+                    base.FireDown(dir);
+                    clip.useBullet();
+                    shootDuration.Reset();
+                    shootLight.useLight();
+                }
+            }
+            else
+            {
+                Reload();
             }
         }
 
         public override void FireHold(Vector2 dir)
         {
-            if (shootDuration.CanShoot() && clip.canShoot)
+            if (clip.canShoot)
             {
-                base.FireHold(dir);
-                clip.useBullet();
-                shootDuration.Reset();
-                shootLight.useLight();
+                if (shootDuration.CanShoot())
+                {
+
+                    base.FireDown(dir);
+                    clip.useBullet();
+                    shootDuration.Reset();
+                    shootLight.useLight();
+                }
+            }
+            else
+            {
+                Reload();
             }
         }
 
         public override void Reload()
         {
-            base.Reload();
-            BulletBag.Reset(clip, ReloadAudioSource);
+            if (!Reseting)
+            {
+
+                base.Reload();
+                BulletBag.Reset(clip, ReloadAudioSource);
+            }
+        }
+
+        protected override void Shoot(Vector2 dir)
+        {
+            GameObject bulletObj = Instantiate(Bullet);
+            bulletObj.transform.position = Bullet.transform.position;
+            bulletObj.Rotation(Quaternion.AngleAxis(dir.ToAngle(), bulletObj.transform.forward));
+            Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+            playerBullet.speed = 30;
+            playerBullet.damage = 50;
+            playerBullet.Init(dir, "enemy");
         }
 
     }

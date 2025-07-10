@@ -24,6 +24,13 @@ namespace GameRuntime.Room
 
 		private RoomConfig roomConfig = new RoomConfig();
 
+		private List<EnemyWaveConfig> enemyWaveConfigs = new List<EnemyWaveConfig>()
+		{
+			new EnemyWaveConfig(),
+			new EnemyWaveConfig(),
+			new EnemyWaveConfig()
+		};
+
 		public Room WithRoomConfig(RoomConfig roomConfig)
 		{
 			this.roomConfig = roomConfig;
@@ -49,7 +56,16 @@ namespace GameRuntime.Room
 				enemys.RemoveWhere(e => !e);
 				if (enemys.Count <= 0)
 				{
-					state = RoomState.Over;
+					if (enemyWaveConfigs.Count <= 0)
+					{
+						state = RoomState.Over;
+
+					}
+					else
+					{
+						GenerateEnemy();
+						enemyWaveConfigs.RemoveAt(0);
+					}
 				}
 			}
 
@@ -78,15 +94,6 @@ namespace GameRuntime.Room
 					if (state == RoomState.Ready)
 					{
 						state = RoomState.Battle;
-						//显示所有敌人
-						for (int i = 0; i < enemyPos.Count; i++)
-						{
-							var pos = enemyPos[i];
-							GameObject enemy = Instantiate(LevelController.Instance.enemyPrefab)
-							.Position2D(pos.ToVector2())
-							.Show();
-							enemys.Add(enemy.GetComponent<Enemy>());
-						}
 						for (int i = 0; i < doors.Count; i++)
 						{
 							var door = doors[i];
@@ -98,5 +105,17 @@ namespace GameRuntime.Room
 			}
 		}
 
+		private void GenerateEnemy()
+		{
+			//显示所有敌人
+			for (int i = 0; i < enemyPos.Count; i++)
+			{
+				var pos = enemyPos[i];
+				GameObject enemy = Instantiate(LevelController.Instance.enemyPrefab)
+				.Position2D(pos.ToVector2())
+				.Show();
+				enemys.Add(enemy.GetComponent<Enemy>());
+			}
+		}
 	}
 }

@@ -50,7 +50,13 @@ namespace GameRuntime.Weapon
         {
             if (shootDuration.CanShoot() && clip.canShoot)
             {
-                base.Shoot(dir);
+                GameObject bulletObj = Instantiate(Bullet);
+                bulletObj.transform.position = Bullet.transform.position;
+                bulletObj.Rotation(Quaternion.AngleAxis(dir.ToAngle(), bulletObj.transform.forward));
+                Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+                playerBullet.speed = 15;
+                playerBullet.damage = 3;
+                playerBullet.Init(dir, "enemy");
                 shootDuration.Reset();
                 clip.useBullet();
                 shootLight.useLight();
@@ -63,13 +69,17 @@ namespace GameRuntime.Weapon
             if (!clip.canShoot)
             {
                 AudioSource.Stop();
+                Reload();
             }
         }
 
         public override void Reload()
         {
-            base.Reload();
-            BulletBag.Reset(clip, ReloadAudioSource);
+            if (!Reseting)
+            {
+                base.Reload();
+                BulletBag.Reset(clip, ReloadAudioSource);
+            }
         }
     }
 }

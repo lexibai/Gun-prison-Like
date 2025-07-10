@@ -27,15 +27,23 @@ namespace GameRuntime.Weapon
 
         public override void FireDown(Vector2 dir)
         {
-            if (shootDuration.CanShoot() && clip.canShoot)
+            if (clip.canShoot)
             {
-                base.FireDown(dir);
-                AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
-                AudioSource.loop = true;
-                AudioSource.Play();
-                shootDuration.Reset();
-                clip.useBullet();
-                shootLight.useLight();
+                if (shootDuration.CanShoot())
+                {
+
+                    base.FireDown(dir);
+                    AudioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
+                    AudioSource.loop = true;
+                    AudioSource.Play();
+                    shootDuration.Reset();
+                    clip.useBullet();
+                    shootLight.useLight();
+                }
+            }
+            else
+            {
+                Reload();
             }
         }
 
@@ -65,8 +73,11 @@ namespace GameRuntime.Weapon
                 AudioSource.clip = AKShootEnd;
                 AudioSource.loop = false;
                 AudioSource.Play();
+            }
 
-
+            if (!clip.canShoot)
+            {
+                Reload();
             }
 
         }
@@ -85,8 +96,12 @@ namespace GameRuntime.Weapon
 
         public override void Reload()
         {
-            base.Reload();
-            BulletBag.Reset(clip, ReloadAudioSource);
+            if (!Reseting)
+            {
+                base.Reload();
+                BulletBag.Reset(clip, ReloadAudioSource);
+
+            }
         }
 
         public override void OnEquip()
@@ -94,6 +109,19 @@ namespace GameRuntime.Weapon
             base.OnEquip();
             GameUi.Instance.ShowBulletNum(clip);
         }
+
+        protected override void Shoot(Vector2 dir)
+        {
+            GameObject bulletObj = Instantiate(Bullet);
+            bulletObj.transform.position = Bullet.transform.position;
+            bulletObj.Rotation(Quaternion.AngleAxis(dir.ToAngle(), bulletObj.transform.forward));
+            Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+            playerBullet.speed = 12;
+            playerBullet.damage = 5;
+            playerBullet.Init(dir, "enemy");
+        }
+
+
 
     }
 }

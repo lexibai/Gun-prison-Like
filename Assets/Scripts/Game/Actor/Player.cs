@@ -47,6 +47,8 @@ namespace GameRuntime.Actor
             audioClips.Add(this.GunTake3);
             audioClips.Add(this.GunTake4);
             audioClips.Add(this.GunTake5);
+
+            this.info.Hide();
         }
 
         void Start()
@@ -81,6 +83,17 @@ namespace GameRuntime.Actor
                 CutGun();
             };
             CutGun();
+        }
+
+        public void DelayInfo(string info, float time)
+        {
+            this.info.text = info;
+            this.info.Show();
+            ActionKit.Sequence().Delay(time).Callback(() =>
+            {
+                this.info.Hide();
+            })
+            .StartCurrentScene();
         }
 
         private void Move(InputAction.CallbackContext ctx)

@@ -19,7 +19,7 @@ namespace GameRuntime.Weapon
 
 
 
-        private GunClip clip = new GunClip(100);
+        private GunClip clip = new GunClip(2);
         public override void OnEquip()
         {
             base.OnEquip();
@@ -33,20 +33,26 @@ namespace GameRuntime.Weapon
 
         public override void FireHold(Vector2 dir)
         {
-
-            fireTime += Time.deltaTime;
-            if (fireTime > 3f)
+            if (clip.canShoot)
             {
-                Shoot(dir);
-                AudioPlay();
-                clip.useBullet();
-                bulletSprite.gameObject.SetActive(false);
-                fireTime = 0f; // 重置射击间隔
+                fireTime += Time.deltaTime;
+                if (fireTime > 3f)
+                {
+                    Shoot(dir);
+                    AudioPlay();
+                    clip.useBullet();
+                    bulletSprite.gameObject.SetActive(false);
+                    fireTime = 0f; // 重置射击间隔
 
+                }
+                else if (fireTime > 1f)
+                {
+                    bulletSprite.gameObject.SetActive(true);
+                }
             }
-            else if (fireTime > 1f)
+            else
             {
-                bulletSprite.gameObject.SetActive(true);
+                Reload();
             }
 
         }
@@ -55,19 +61,43 @@ namespace GameRuntime.Weapon
         {
             if (fireTime < 1f)
                 return;
-            Shoot(dir);
-            AudioPlay();
-            clip.useBullet();
-            bulletSprite.gameObject.SetActive(false);
-            fireTime = 0f; // 重置射击间隔
+
+            if (clip.canShoot)
+            {
+
+                Shoot(dir);
+                AudioPlay();
+                clip.useBullet();
+                bulletSprite.gameObject.SetActive(false);
+                fireTime = 0f; // 重置射击间隔
+            }
+            else
+            {
+                Reload();
+            }
         }
 
 
 
         public override void Reload()
         {
-            base.Reload();
-            BulletBag.Reset(clip, ReloadAudioSource);
+            if (!Reseting)
+            {
+                base.Reload();
+                BulletBag.Reset(clip, ReloadAudioSource);
+            }
         }
+        protected override void Shoot(Vector2 dir)
+        {
+            GameObject bulletObj = Instantiate(Bullet);
+            bulletObj.transform.position = Bullet.transform.position;
+            bulletObj.Rotation(Quaternion.AngleAxis(dir.ToAngle(), bulletObj.transform.forward));
+            Bullet playerBullet = bulletObj.GetComponent<Bullet>();
+            playerBullet.speed = 5;
+            playerBullet.damage = 5;
+            playerBullet.Init(dir, "enemy");
+        }
+
+
     }
 }

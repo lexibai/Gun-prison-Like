@@ -1,3 +1,4 @@
+using GameRuntime.Actor;
 using GameRuntime.UI;
 using QFramework;
 using UnityEngine;
@@ -25,6 +26,10 @@ namespace GameRuntime.Weapon
         public void useBullet()
         {
             currentBulletNum--;
+            if (currentBulletNum <= 0)
+            {
+                Player.Instance.DelayInfo("子弹耗尽", 2);
+            }
             GameUi.Instance.ShowBulletNum(this);
         }
 
