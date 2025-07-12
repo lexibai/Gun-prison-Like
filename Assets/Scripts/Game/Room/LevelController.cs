@@ -45,17 +45,71 @@ namespace GameRuntime.Room
 
         void Start()
         {
+            RoomNode roomNode = new RoomNode();
+            roomNode.AddChildren(RoomType.Battle)
+                .AddChildren(RoomType.Chest)
+                .AddChildren(RoomType.Battle)
+                .AddChildren(RoomType.Battle)
+                .AddChildren(RoomType.Chest)
+                .AddChildren(RoomType.Battle)
+                .AddChildren(RoomType.Battle)
+                .AddChildren(RoomType.Finish);
+
             var offset = Vector2.zero;
-            GenerateRoom(offset, Config.startCfg);
-            offset += (Config.startCfg.RoomWidth) * Vector2.right;
-            GenerateRoom(offset, Config.normalCfg.GetRandomItem());
-            offset += (Config.startCfg.RoomWidth) * Vector2.right;
-            GenerateRoom(offset, Config.normalCfg.GetRandomItem());
-            offset += (Config.startCfg.RoomWidth) * Vector2.right;
-            GenerateRoom(offset, Config.normalCfg.GetRandomItem());
-            offset += (Config.startCfg.RoomWidth) * Vector2.right;
-            offset += 4 * Vector2.down;
-            GenerateRoom(offset, Config.finishCfg);
+            offset = GenerateRoomNode(roomNode, offset);
+        }
+
+        private Vector2 GenerateRoomNode(RoomNode roomNode, Vector2 offset)
+        {
+            if (roomNode.roomType == RoomType.Normal)
+            {
+                RoomConfig roomConfig = Config.startCfg;
+                GenerateRoom(offset, roomConfig);
+                offset += (roomConfig.RoomWidth) * Vector2.right;
+                offset = GeneratePassage(offset, roomConfig, 3);
+
+            }
+            else if (roomNode.roomType == RoomType.Battle)
+            {
+                GenerateRoom(offset, Config.normalCfg.GetRandomItem());
+                offset += (Config.startCfg.RoomWidth) * Vector2.right;
+                offset = GeneratePassage(offset, Config.normalCfg.GetRandomItem(), 3);
+            }
+            else if (roomNode.roomType == RoomType.Finish)
+            {
+                GenerateRoom(offset, Config.finishCfg);
+                offset += (Config.finishCfg.RoomWidth) * Vector2.right;
+            }
+            else if (roomNode.roomType == RoomType.Chest)
+            {
+                GenerateRoom(offset, Config.chestCfg);
+                offset += (Config.chestCfg.RoomWidth) * Vector2.right;
+                offset = GeneratePassage(offset, Config.chestCfg, 3);
+            }
+
+            foreach (var children in roomNode.children)
+            {
+                offset = GenerateRoomNode(children, offset);
+            }
+
+            return offset;
+        }
+
+        private Vector2 GeneratePassage(Vector2 offset, RoomConfig roomConfig, int passageLength)
+        {
+            int roomHeight = roomConfig.RoomHeight;
+            float PosX = offset.x;
+            float PosY = roomHeight / 2 - offset.y;
+            for (int i = 0; i < passageLength; i++)
+            {
+                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY - 2, 0), wallTile);
+                floorTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY - 1, 0), floorTile);
+                floorTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY, 0), floorTile);
+                floorTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY + 1, 0), floorTile);
+                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY + 2, 0), wallTile);
+            }
+            offset += passageLength * Vector2.right;
+            return offset;
         }
 
         /// <summary>
@@ -64,14 +118,15 @@ namespace GameRuntime.Room
         /// # 表示敌人
         /// F 表示通过点
         /// D 表示门
+        /// C 表示宝箱
         /// </summary>
         /// <param name="offset">偏移量</param>
         /// <param name="roomCfg">房间配置</param>
         public void GenerateRoom(Vector2 offset, RoomConfig roomConfig)
         {
             List<string> roomCfg = roomConfig.RoomLines;
-            float roomWidth = roomCfg[0].Length;
-            float roomHeight = roomCfg.Count;
+            float roomWidth = roomConfig.RoomWidth;
+            float roomHeight = roomConfig.RoomHeight;
 
             float roomPosX = roomWidth / 2 + offset.x;
             float roomPosY = roomHeight / 2 - offset.y;
@@ -126,6 +181,12 @@ namespace GameRuntime.Room
                                     .Position2D(map_x + 0.5f, map_y + 0.5f)
                                     .Hide();
                         room.AddDoor(door);
+                    }
+                    else if (roomCfg[y][x] == 'C')
+                    {
+                        Instantiate(Chest.gameObject)
+                                    .Position2D(map_x + 0.5f, map_y + 0.5f)
+                                    .Show();
                     }
                 }
             }

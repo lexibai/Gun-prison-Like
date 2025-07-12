@@ -19,38 +19,17 @@ MonoBehaviour:
     From: 0
     NameToFullName: []
     BindInfos:
-    - TypeName: GameRuntime.Weapon.Pistol
-      PathToRoot: Weapon/Pistol
-      MemberName: Pistol
-    - TypeName: GameRuntime.Weapon.MP5
-      PathToRoot: Weapon/MP5
-      MemberName: MP5
-    - TypeName: GameRuntime.Weapon.ShotGun
-      PathToRoot: Weapon/ShotGun
-      MemberName: ShotGun
-    - TypeName: GameRuntime.Weapon.AK
-      PathToRoot: Weapon/AK
-      MemberName: AK
-    - TypeName: GameRuntime.Weapon.AWP
-      PathToRoot: Weapon/AWP
-      MemberName: AWP
-    - TypeName: GameRuntime.Weapon.Laser
-      PathToRoot: Weapon/Laser
-      MemberName: Laser
-    - TypeName: GameRuntime.Weapon.Bow
-      PathToRoot: Weapon/Bow
-      MemberName: Bow
-    - TypeName: GameRuntime.Weapon.RocketGun
-      PathToRoot: Weapon/RocketGun
-      MemberName: RocketGun
-    - TypeName: UnityEngine.GameObject
-      PathToRoot: Weapon/GunShootLight
-      MemberName: GunShootLight
-    - TypeName: UnityEngine.UI.Text
-      PathToRoot: Canvas/info
-      MemberName: info
-    ScriptsFolder: Assets\Scripts\Game\Actor
-    ClassName: Player
-    Namespace: GameRuntime.Actor
+    - TypeName: GameRuntime.Room.Room
+      PathToRoot: Room
+      MemberName: Room
+    - TypeName: GameRuntime.PowerUp.HP1
+      PathToRoot: HP1
+      MemberName: HP1
+    - TypeName: GameRuntime.PowerUp.Chest
+      PathToRoot: Chest
+      MemberName: Chest
+    ScriptsFolder: Assets\Scripts\Game\Room
+    ClassName: LevelController
+    Namespace: GameRuntime.Room
     MainCode: 
     DesignerCode: 

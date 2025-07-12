@@ -9,6 +9,7 @@ namespace GameRuntime.Room
     {
         Normal,
         Battle,
+        Chest,
         Finish
     }
 
@@ -32,7 +33,7 @@ namespace GameRuntime.Room
             }
         }
 
-        public int roomHeight => RoomLines.Count;
+        public int RoomHeight => RoomLines.Count;
 
         public RoomConfig Type(RoomType type)
         {
