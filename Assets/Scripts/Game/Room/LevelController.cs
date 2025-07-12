@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Markdig.Renderers.Html;
 using QFramework;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -55,44 +56,140 @@ namespace GameRuntime.Room
                 .AddChildren(RoomType.Battle)
                 .AddChildren(RoomType.Finish);
 
+            DynaGrid<RoomGenerateNode> dynaGrid = GenerateRoomNodeBFS(roomNode);
             var offset = Vector2.zero;
-            offset = GenerateRoomNode(roomNode, offset);
+            dynaGrid.ForEach((x, y, generateNode) =>
+            {
+                GenerateRoomNode(generateNode, new Vector2(x, y));
+            });
         }
 
-        private Vector2 GenerateRoomNode(RoomNode roomNode, Vector2 offset)
+
+
+
+        private DynaGrid<RoomGenerateNode> GenerateRoomNodeBFS(RoomNode roomNode)
         {
-            if (roomNode.roomType == RoomType.Normal)
+            Queue<RoomGenerateNode> queue = new Queue<RoomGenerateNode>();
+            DynaGrid<RoomGenerateNode> grid = new DynaGrid<RoomGenerateNode>();
+            queue.Enqueue(new RoomGenerateNode()
             {
-                RoomConfig roomConfig = Config.startCfg;
-                GenerateRoom(offset, roomConfig);
-                offset += (roomConfig.RoomWidth) * Vector2.right;
-                offset = GeneratePassage(offset, roomConfig, 3);
+                x = 0,
+                y = 0,
+                node = roomNode,
+                doorOpenDir = new HashSet<RoomGenerateDir>()
+            });
+
+            while (queue.Count > 0)
+            {
+                RoomGenerateNode roomGenerateNode = queue.Dequeue();
+                grid[roomGenerateNode.x, roomGenerateNode.y] = roomGenerateNode;
+
+                List<RoomGenerateDir> dirList = new List<RoomGenerateDir>();
+                if (grid[roomGenerateNode.x + 1, roomGenerateNode.y] == null)
+                {
+                    dirList.Add(RoomGenerateDir.Right);
+                }
+                if (grid[roomGenerateNode.x - 1, roomGenerateNode.y] == null)
+                {
+                    dirList.Add(RoomGenerateDir.Left);
+                }
+                if (grid[roomGenerateNode.x, roomGenerateNode.y + 1] == null)
+                {
+                    dirList.Add(RoomGenerateDir.Up);
+                }
+                if (grid[roomGenerateNode.x, roomGenerateNode.y - 1] == null)
+                {
+                    dirList.Add(RoomGenerateDir.Down);
+                }
+
+                foreach (RoomNode children in roomGenerateNode.node.children)
+                {
+                    RoomGenerateDir roomGenerateDir = dirList.GetRandomItem();
+                    if (roomGenerateDir == RoomGenerateDir.Right)
+                    {
+                        roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
+                        queue.Enqueue(new RoomGenerateNode()
+                        {
+                            x = roomGenerateNode.x + 1,
+                            y = roomGenerateNode.y,
+                            node = children,
+                            doorOpenDir = new HashSet<RoomGenerateDir>()
+                            {
+                                RoomGenerateDir.Left
+                            }
+                        });
+                    }
+                    else if (roomGenerateDir == RoomGenerateDir.Left)
+                    {
+                        roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
+                        queue.Enqueue(new RoomGenerateNode()
+                        {
+                            x = roomGenerateNode.x - 1,
+                            y = roomGenerateNode.y,
+                            node = children,
+                            doorOpenDir = new HashSet<RoomGenerateDir>()
+                            {
+                                RoomGenerateDir.Right
+                            }
+                        });
+
+                    }
+                    else if (roomGenerateDir == RoomGenerateDir.Up)
+                    {
+                        roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
+                        queue.Enqueue(new RoomGenerateNode()
+                        {
+                            x = roomGenerateNode.x,
+                            y = roomGenerateNode.y + 1,
+                            node = children,
+                            doorOpenDir = new HashSet<RoomGenerateDir>()
+                            {
+                                RoomGenerateDir.Down
+                            }
+                        });
+
+                    }
+                    else if (roomGenerateDir == RoomGenerateDir.Down)
+                    {
+                        roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
+                        queue.Enqueue(new RoomGenerateNode()
+                        {
+                            x = roomGenerateNode.x,
+                            y = roomGenerateNode.y - 1,
+                            node = children,
+                            doorOpenDir = new HashSet<RoomGenerateDir>()
+                            {
+                                RoomGenerateDir.Up
+                            }
+                        });
+
+                    }
+                }
 
             }
-            else if (roomNode.roomType == RoomType.Battle)
+            return grid;
+        }
+
+        private Vector2 GenerateRoomNode(RoomGenerateNode roomNode, Vector2 MapPos)
+        {
+            if (roomNode.node.roomType == RoomType.Normal)
             {
-                GenerateRoom(offset, Config.normalCfg.GetRandomItem());
-                offset += (Config.startCfg.RoomWidth) * Vector2.right;
-                offset = GeneratePassage(offset, Config.normalCfg.GetRandomItem(), 3);
+                GenerateRoom(MapPos, Config.startCfg, roomNode);
             }
-            else if (roomNode.roomType == RoomType.Finish)
+            else if (roomNode.node.roomType == RoomType.Battle)
             {
-                GenerateRoom(offset, Config.finishCfg);
-                offset += (Config.finishCfg.RoomWidth) * Vector2.right;
+                GenerateRoom(MapPos, Config.normalCfg.GetRandomItem(), roomNode);
             }
-            else if (roomNode.roomType == RoomType.Chest)
+            else if (roomNode.node.roomType == RoomType.Finish)
             {
-                GenerateRoom(offset, Config.chestCfg);
-                offset += (Config.chestCfg.RoomWidth) * Vector2.right;
-                offset = GeneratePassage(offset, Config.chestCfg, 3);
+                GenerateRoom(MapPos, Config.finishCfg, roomNode);
+            }
+            else if (roomNode.node.roomType == RoomType.Chest)
+            {
+                GenerateRoom(MapPos, Config.chestCfg, roomNode);
             }
 
-            foreach (var children in roomNode.children)
-            {
-                offset = GenerateRoomNode(children, offset);
-            }
-
-            return offset;
+            return MapPos;
         }
 
         private Vector2 GeneratePassage(Vector2 offset, RoomConfig roomConfig, int passageLength)
@@ -102,11 +199,9 @@ namespace GameRuntime.Room
             float PosY = roomHeight / 2 - offset.y;
             for (int i = 0; i < passageLength; i++)
             {
-                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY - 2, 0), wallTile);
-                floorTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY - 1, 0), floorTile);
+                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY - 1, 0), wallTile);
                 floorTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY, 0), floorTile);
-                floorTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY + 1, 0), floorTile);
-                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY + 2, 0), wallTile);
+                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY + 1, 0), wallTile);
             }
             offset += passageLength * Vector2.right;
             return offset;
@@ -120,16 +215,17 @@ namespace GameRuntime.Room
         /// D 表示门
         /// C 表示宝箱
         /// </summary>
-        /// <param name="offset">偏移量</param>
-        /// <param name="roomCfg">房间配置</param>
-        public void GenerateRoom(Vector2 offset, RoomConfig roomConfig)
+        /// <param name="MapPos"></param>
+        /// <param name="roomConfig"></param>
+        /// <param name="roomNode"></param>
+        public void GenerateRoom(Vector2 MapPos, RoomConfig roomConfig, RoomGenerateNode roomNode)
         {
             List<string> roomCfg = roomConfig.RoomLines;
             float roomWidth = roomConfig.RoomWidth;
             float roomHeight = roomConfig.RoomHeight;
 
-            float roomPosX = roomWidth / 2 + offset.x;
-            float roomPosY = roomHeight / 2 - offset.y;
+            float roomPosX = roomWidth / 2 + (MapPos.x * roomWidth) + (2 * MapPos.x);
+            float roomPosY = roomHeight / 2 + ((MapPos.y - 1) * roomHeight) + (2 * MapPos.y);
 
             Room room = Object.Instantiate(Room)
                             .WithRoomConfig(roomConfig)
@@ -137,12 +233,12 @@ namespace GameRuntime.Room
                             .Show();
             BoxCollider2D boxCollider2D = room.GetComponent<BoxCollider2D>();
             boxCollider2D.size = new Vector2(roomWidth - 2, roomHeight - 2);
-            for (int y = 0; y < roomCfg.Count; y++)
+            for (int y = 0; y < roomHeight; y++)
             {
-                for (int x = 0; x < roomCfg[y].Length; x++)
+                for (int x = 0; x < roomWidth; x++)
                 {
-                    int map_y = roomCfg.Count - 1 - y - Mathf.FloorToInt(offset.y); // Unity的Tilemap坐标系Y轴向上为正
-                    int map_x = x + Mathf.FloorToInt(offset.x);
+                    int map_y = (Mathf.FloorToInt(MapPos.y) * roomConfig.RoomHeight) - 1 - y + (2 * (int)MapPos.y); // Unity的Tilemap坐标系Y轴向上为正
+                    int map_x = x + (Mathf.FloorToInt(MapPos.x) * roomConfig.RoomWidth) + (2 * (int)MapPos.x);
                     floorTileMap.SetTile(new Vector3Int(map_x, map_y, 0), floorTile);
                     if (roomCfg[y][x] == '0')
                     {
@@ -177,10 +273,40 @@ namespace GameRuntime.Room
                     }
                     else if (roomCfg[y][x] == 'D')
                     {
-                        GameObject door = Instantiate(doorPrefab)
-                                    .Position2D(map_x + 0.5f, map_y + 0.5f)
-                                    .Hide();
-                        room.AddDoor(door);
+                        if (x == 0 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Left))
+                        {
+                            GameObject door = Instantiate(doorPrefab)
+                                                                .Position2D(map_x + 0.5f, map_y + 0.5f)
+                                                                .Hide();
+                            room.AddDoor(door);
+                        }
+                        else if (x == roomWidth - 1 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Right))
+                        {
+                            GameObject door = Instantiate(doorPrefab)
+                                                                .Position2D(map_x + 0.5f, map_y + 0.5f)
+                                                                .Hide();
+                            room.AddDoor(door);
+                        }
+                        else if (y == 0 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Up))
+                        {
+                            GameObject door = Instantiate(doorPrefab)
+                                                                .Position2D(map_x + 0.5f, map_y + 0.5f)
+                                                                .Hide();
+                            room.AddDoor(door);
+                        }
+                        else if (y == roomHeight - 1 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Down))
+                        {
+                            GameObject door = Instantiate(doorPrefab)
+                                                                .Position2D(map_x + 0.5f, map_y + 0.5f)
+                                                                .Hide();
+                            room.AddDoor(door);
+                        }
+                        else
+                        {
+                            wallTileMap.SetTile(new Vector3Int(map_x, map_y, 0), wallTile);
+
+                        }
+
                     }
                     else if (roomCfg[y][x] == 'C')
                     {
@@ -192,6 +318,5 @@ namespace GameRuntime.Room
             }
         }
 
-        void Update() { }
     }
 }
