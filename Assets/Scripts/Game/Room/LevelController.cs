@@ -47,13 +47,13 @@ namespace GameRuntime.Room
         {
             var offset = Vector2.zero;
             GenerateRoom(offset, Config.startCfg);
-            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            offset += (Config.startCfg.RoomWidth) * Vector2.right;
             GenerateRoom(offset, Config.normalCfg.GetRandomItem());
-            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            offset += (Config.startCfg.RoomWidth) * Vector2.right;
             GenerateRoom(offset, Config.normalCfg.GetRandomItem());
-            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            offset += (Config.startCfg.RoomWidth) * Vector2.right;
             GenerateRoom(offset, Config.normalCfg.GetRandomItem());
-            offset += (Config.startCfg.RoomWidth + 2) * Vector2.right;
+            offset += (Config.startCfg.RoomWidth) * Vector2.right;
             offset += 4 * Vector2.down;
             GenerateRoom(offset, Config.finishCfg);
         }

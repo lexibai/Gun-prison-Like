@@ -63,7 +63,10 @@ namespace GameRuntime.Weapon
             }
             else
             {
-                Reload();
+                if (Time.frameCount % 30 == 0)
+                {
+                    AudioKit.PlaySound("resources://EmptyBulletSound");
+                }
             }
         }
 

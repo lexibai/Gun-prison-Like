@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bded2c22f004b85b16f022651dd43b5, type: 3}
   m_Name: Setting
   m_EditorClassIdentifier: 
-  Open: 1
+  Open: 0
   WhenCompileFinish: 1

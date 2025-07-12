@@ -69,7 +69,10 @@ namespace GameRuntime.Weapon
             if (!clip.canShoot)
             {
                 AudioSource.Stop();
-                Reload();
+                if (Time.frameCount % 30 == 0)
+                {
+                    AudioKit.PlaySound("resources://EmptyBulletSound");
+                }
             }
         }
 

@@ -49,6 +49,9 @@ namespace GameRuntime.Actor
             audioClips.Add(this.GunTake5);
 
             this.info.Hide();
+            AudioKit.Settings.IsSoundOn.Value = true;
+            AudioKit.Settings.SoundVolume.Value = 1;
+            Application.targetFrameRate = 60;
         }
 
         void Start()

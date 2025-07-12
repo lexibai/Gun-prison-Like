@@ -66,19 +66,30 @@ namespace GameRuntime.Weapon
                 shootLight.useLight();
             }
 
-            if (!clip.canShoot && AudioSource.clip != AKShootEnd)
-            {
-
-                AudioSource.Stop();
-                AudioSource.clip = AKShootEnd;
-                AudioSource.loop = false;
-                AudioSource.Play();
-            }
-
             if (!clip.canShoot)
             {
-                Reload();
+                if (AudioSource.clip != AKShootEnd)
+                {
+
+                    AudioSource.Stop();
+                    AudioSource.clip = AKShootEnd;
+                    AudioSource.loop = false;
+                    AudioSource.Play();
+                }
+
+
+
+
+                if (Time.frameCount % 30 == 0)
+                {
+                    AudioKit.PlaySound("resources://EmptyBulletSound");
+                }
+
             }
+            // if (!clip.canShoot)
+            // {
+            //     Reload();
+            // }
 
         }
 

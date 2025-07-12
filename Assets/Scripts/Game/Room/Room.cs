@@ -2,6 +2,7 @@ using UnityEngine;
 using QFramework;
 using System.Collections.Generic;
 using GameRuntime.Actor;
+using System.Linq;
 
 namespace GameRuntime.Room
 {
@@ -69,17 +70,14 @@ namespace GameRuntime.Room
 				}
 			}
 
-			//print(state.ToString());
 			if (state == RoomState.Over)
 			{
-				//print("开始开门");
 				for (int i = 0; i < doors.Count; i++)
 				{
 					print(i);
 					var door = doors[i];
 					door.Hide();
 				}
-				//print("开门结束");
 			}
 		}
 
@@ -107,10 +105,14 @@ namespace GameRuntime.Room
 
 		private void GenerateEnemy()
 		{
-			//显示所有敌人
-			for (int i = 0; i < enemyPos.Count; i++)
+			int enemyNum = Random.Range(3, 6);
+			var currentPos = enemyPos.OrderByDescending(pos =>
 			{
-				var pos = enemyPos[i];
+				return (pos - Player.Instance.transform.position).magnitude;
+			}).Take(enemyNum);
+			//显示所有敌人
+			foreach (var pos in currentPos)
+			{
 				GameObject enemy = Instantiate(LevelController.Instance.enemyPrefab)
 				.Position2D(pos.ToVector2())
 				.Show();
