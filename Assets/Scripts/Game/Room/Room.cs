@@ -21,7 +21,7 @@ namespace GameRuntime.Room
 
 		private HashSet<Enemy> enemys = new HashSet<Enemy>();
 		private List<Vector3> enemyPos = new List<Vector3>();
-		private List<GameObject> doors = new List<GameObject>();
+		public List<Door> Doors = new List<Door>();
 
 		private RoomConfig roomConfig = new RoomConfig();
 
@@ -44,9 +44,9 @@ namespace GameRuntime.Room
 			enemyPos.Add(pos);
 		}
 
-		public void AddDoor(GameObject door)
+		public void AddDoor(Door door)
 		{
-			doors.Add(door);
+			Doors.Add(door);
 		}
 
 
@@ -60,7 +60,6 @@ namespace GameRuntime.Room
 					if (enemyWaveConfigs.Count <= 0)
 					{
 						state = RoomState.Over;
-
 					}
 					else
 					{
@@ -72,11 +71,11 @@ namespace GameRuntime.Room
 
 			if (state == RoomState.Over)
 			{
-				for (int i = 0; i < doors.Count; i++)
+				for (int i = 0; i < Doors.Count; i++)
 				{
 					print(i);
-					var door = doors[i];
-					door.Hide();
+					var door = Doors[i];
+					door.OpenDoor();
 				}
 			}
 		}
@@ -92,10 +91,10 @@ namespace GameRuntime.Room
 					if (state == RoomState.Ready)
 					{
 						state = RoomState.Battle;
-						for (int i = 0; i < doors.Count; i++)
+						for (int i = 0; i < Doors.Count; i++)
 						{
-							var door = doors[i];
-							door.Show();
+							var door = Doors[i];
+							door.CloseDoor();
 						}
 					}
 

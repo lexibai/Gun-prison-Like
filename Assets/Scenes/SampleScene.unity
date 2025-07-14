@@ -891,6 +891,7 @@ MonoBehaviour:
   PrefabFolder: Assets/Art/Prefab
   ArchitectureFullTypeName: 
   ViewControllerFullTypeName: 
+  Doors: []
 --- !u!114 &117750531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2711,6 +2712,9 @@ GameObject:
   - component: {fileID: 701832711}
   - component: {fileID: 701832710}
   - component: {fileID: 701832709}
+  - component: {fileID: 701832712}
+  - component: {fileID: 701832713}
+  - component: {fileID: 701832714}
   m_Layer: 9
   m_Name: Door
   m_TagString: Untagged
@@ -2834,6 +2838,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1849296158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &701832712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701832708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: Door
+  CustomComment: 
+  mComponentName: GameRuntime.Room.Door
+--- !u!114 &701832713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701832708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c868a57cd7d5e144b05efbc3dd37100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Namespace: GameRuntime.Room
+  ScriptName: Door
+  ScriptsFolder: Assets\Scripts\Game\Room
+  GeneratePrefab: 0
+  PrefabFolder: Assets/Art/Prefab
+  ArchitectureFullTypeName: 
+  ViewControllerFullTypeName: 
+  DoorDir: 0
+  DoorPos: {x: 0, y: 0}
+  DoorClose: {fileID: 21300000, guid: 23101af52621f4142ae2b9897d9b892e, type: 3}
+  DoorOpen: {fileID: 21300000, guid: 6bee348bbef74804d80b9fb2c7048c80, type: 3}
+  SelfSpriteRenderer: {fileID: 701832710}
+  SelfBoxCollider2D: {fileID: 701832709}
+--- !u!114 &701832714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701832708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411e729afed24c62a04e2b99d9122e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Binds:
+  - MemberName: DoorClose
+    Object: {fileID: 21300000, guid: 23101af52621f4142ae2b9897d9b892e, type: 3}
+  - MemberName: DoorOpen
+    Object: {fileID: 21300000, guid: 6bee348bbef74804d80b9fb2c7048c80, type: 3}
+  - MemberName: SelfSpriteRenderer
+    Object: {fileID: 701832710}
+  - MemberName: SelfBoxCollider2D
+    Object: {fileID: 701832709}
 --- !u!1 &709994831
 GameObject:
   m_ObjectHideFlags: 0
@@ -6610,8 +6676,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 1868368657}
   enemyPrefab: {fileID: 393531362}
   finishPrefab: {fileID: 2039907702}
-  doorPrefab: {fileID: 701832708}
   Room: {fileID: 117750530}
+  Door: {fileID: 701832713}
   HP1: {fileID: 661404423}
   Chest: {fileID: 1308038921}
 --- !u!1 &1868368657

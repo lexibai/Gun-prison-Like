@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Markdig.Renderers.Html;
 using QFramework;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -20,8 +19,6 @@ namespace GameRuntime.Room
         public GameObject playerPrefab;
         public GameObject enemyPrefab;
         public GameObject finishPrefab;
-        public GameObject doorPrefab;
-
 
 
         private TileBase wallTile
@@ -56,12 +53,15 @@ namespace GameRuntime.Room
                 .AddChildren(RoomType.Battle)
                 .AddChildren(RoomType.Finish);
 
+            DynaGrid<Room> roomGrid = new DynaGrid<Room>();
             DynaGrid<RoomGenerateNode> dynaGrid = GenerateRoomNodeBFS(roomNode);
             var offset = Vector2.zero;
             dynaGrid.ForEach((x, y, generateNode) =>
             {
-                GenerateRoomNode(generateNode, new Vector2(x, y));
+                Room room = GenerateRoomNode(generateNode, new Vector2(x, y));
+                roomGrid[x, y] = room;
             });
+            GeneratePassage(roomGrid);
         }
 
 
@@ -170,41 +170,68 @@ namespace GameRuntime.Room
             return grid;
         }
 
-        private Vector2 GenerateRoomNode(RoomGenerateNode roomNode, Vector2 MapPos)
+        private Room GenerateRoomNode(RoomGenerateNode roomNode, Vector2 MapPos)
         {
             if (roomNode.node.roomType == RoomType.Normal)
             {
-                GenerateRoom(MapPos, Config.startCfg, roomNode);
+                return GenerateRoom(MapPos, Config.startCfg, roomNode);
             }
             else if (roomNode.node.roomType == RoomType.Battle)
             {
-                GenerateRoom(MapPos, Config.normalCfg.GetRandomItem(), roomNode);
+                return GenerateRoom(MapPos, Config.normalCfg.GetRandomItem(), roomNode);
             }
             else if (roomNode.node.roomType == RoomType.Finish)
             {
-                GenerateRoom(MapPos, Config.finishCfg, roomNode);
+                return GenerateRoom(MapPos, Config.finishCfg, roomNode);
             }
             else if (roomNode.node.roomType == RoomType.Chest)
             {
-                GenerateRoom(MapPos, Config.chestCfg, roomNode);
+                return GenerateRoom(MapPos, Config.chestCfg, roomNode);
             }
 
-            return MapPos;
+            return null;
         }
 
-        private Vector2 GeneratePassage(Vector2 offset, RoomConfig roomConfig, int passageLength)
+        private void GeneratePassage(DynaGrid<Room> roomGrid)
         {
-            int roomHeight = roomConfig.RoomHeight;
-            float PosX = offset.x;
-            float PosY = roomHeight / 2 - offset.y;
-            for (int i = 0; i < passageLength; i++)
+            roomGrid.ForEach((x, y, room) =>
             {
-                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY - 1, 0), wallTile);
-                floorTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY, 0), floorTile);
-                wallTileMap.SetTile(new Vector3Int((int)PosX + i, (int)PosY + 1, 0), wallTile);
-            }
-            offset += passageLength * Vector2.right;
-            return offset;
+                foreach (var doorObj in room.Doors)
+                {
+                    Door door = doorObj.GetComponent<Door>();
+                    if (door.DoorDir == RoomGenerateDir.Left)
+                    {
+                        Room targetRoom = roomGrid[x - 1, y];
+                        Door targetDoor = targetRoom.Doors
+                            .Find(d => d.GetComponent<Door>().DoorDir == RoomGenerateDir.Right).GetComponent<Door>();
+                        int offset = (int)Mathf.Abs(door.DoorPos.x - targetDoor.DoorPos.x);
+                        for (int i = 0; i < offset; i++)
+                        {
+                            wallTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x + i, (int)door.DoorPos.y + 2, 0), wallTile);
+                            floorTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x + i, (int)door.DoorPos.y + 1, 0), floorTile);
+                            floorTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x + i, (int)door.DoorPos.y, 0), floorTile);
+                            floorTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x + i, (int)door.DoorPos.y - 1, 0), floorTile);
+                            wallTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x + i, (int)door.DoorPos.y - 2, 0), wallTile);
+                        }
+                    }
+                    else if (door.DoorDir == RoomGenerateDir.Up)
+                    {
+                        Room targetRoom = roomGrid[x, y + 1];
+                        Door targetDoor = targetRoom.Doors
+                            .Find(d => d.GetComponent<Door>().DoorDir == RoomGenerateDir.Down).GetComponent<Door>();
+                        int offset = (int)Mathf.Abs(door.DoorPos.y - targetDoor.DoorPos.y);
+                        for (int i = 0; i < offset; i++)
+                        {
+                            wallTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x + 2, (int)door.DoorPos.y + i, 0), wallTile);
+                            floorTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x + 1, (int)door.DoorPos.y + i, 0), floorTile);
+                            floorTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x, (int)door.DoorPos.y + i), floorTile);
+                            floorTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x - 1, (int)door.DoorPos.y + i, 0), floorTile);
+                            wallTileMap.SetTile(new Vector3Int((int)targetDoor.DoorPos.x - 2, (int)door.DoorPos.y + i, 0), wallTile);
+                        }
+                    }
+
+                }
+            });
         }
 
         /// <summary>
@@ -218,7 +245,7 @@ namespace GameRuntime.Room
         /// <param name="MapPos"></param>
         /// <param name="roomConfig"></param>
         /// <param name="roomNode"></param>
-        public void GenerateRoom(Vector2 MapPos, RoomConfig roomConfig, RoomGenerateNode roomNode)
+        public Room GenerateRoom(Vector2 MapPos, RoomConfig roomConfig, RoomGenerateNode roomNode)
         {
             List<string> roomCfg = roomConfig.RoomLines;
             float roomWidth = roomConfig.RoomWidth;
@@ -275,36 +302,74 @@ namespace GameRuntime.Room
                     {
                         if (x == 0 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Left))
                         {
-                            GameObject door = Instantiate(doorPrefab)
+                            GameObject door = Instantiate(Door.gameObject)
+                                                                .LocalScaleX(3)
                                                                 .Position2D(map_x + 0.5f, map_y + 0.5f)
-                                                                .Hide();
-                            room.AddDoor(door);
+                                                                .Show();
+                            door.LocalRotation(Quaternion.Euler(new Vector3(0, 0, 90)));
+                            Door doorCs = door.GetComponent<Door>();
+                            doorCs.DoorDir = RoomGenerateDir.Left;
+                            doorCs.DoorPos = new Vector2(map_x, map_y);
+                            ActionKit.DelayFrame(1, () =>
+                            {
+                                wallTileMap.SetTile(new Vector3Int(map_x, map_y + 1, 0), null);
+                                wallTileMap.SetTile(new Vector3Int(map_x, map_y - 1, 0), null);
+                            }).StartCurrentScene();
+                            room.AddDoor(doorCs);
                         }
                         else if (x == roomWidth - 1 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Right))
                         {
-                            GameObject door = Instantiate(doorPrefab)
+                            GameObject door = Instantiate(Door.gameObject)
+                                                                .LocalScaleX(3)
                                                                 .Position2D(map_x + 0.5f, map_y + 0.5f)
-                                                                .Hide();
-                            room.AddDoor(door);
+                                                                .Show();
+                            Door doorCs = door.GetComponent<Door>();
+                            doorCs.DoorDir = RoomGenerateDir.Right;
+                            doorCs.DoorPos = new Vector2(map_x, map_y);
+                            door.LocalRotation(Quaternion.Euler(new Vector3(0, 0, 90)));
+                            ActionKit.DelayFrame(1, () =>
+                            {
+                                wallTileMap.SetTile(new Vector3Int(map_x, map_y + 1, 0), null);
+                                wallTileMap.SetTile(new Vector3Int(map_x, map_y - 1, 0), null);
+                            }).StartCurrentScene();
+
+                            room.AddDoor(doorCs);
                         }
                         else if (y == 0 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Up))
                         {
-                            GameObject door = Instantiate(doorPrefab)
+                            GameObject door = Instantiate(Door.gameObject)
+                                                                .LocalScaleX(3)
                                                                 .Position2D(map_x + 0.5f, map_y + 0.5f)
-                                                                .Hide();
-                            room.AddDoor(door);
+                                                                .Show();
+                            Door doorCs = door.GetComponent<Door>();
+                            doorCs.DoorDir = RoomGenerateDir.Up;
+                            doorCs.DoorPos = new Vector2(map_x, map_y);
+                            ActionKit.DelayFrame(1, () =>
+                            {
+                                wallTileMap.SetTile(new Vector3Int(map_x - 1, map_y, 0), null);
+                                wallTileMap.SetTile(new Vector3Int(map_x + 1, map_y, 0), null);
+                            }).StartCurrentScene();
+                            room.AddDoor(doorCs);
                         }
                         else if (y == roomHeight - 1 && roomNode.doorOpenDir.Contains(RoomGenerateDir.Down))
                         {
-                            GameObject door = Instantiate(doorPrefab)
+                            GameObject door = Instantiate(Door.gameObject)
+                                                                .LocalScaleX(3)
                                                                 .Position2D(map_x + 0.5f, map_y + 0.5f)
-                                                                .Hide();
-                            room.AddDoor(door);
+                                                                .Show();
+                            Door doorCs = door.GetComponent<Door>();
+                            doorCs.DoorDir = RoomGenerateDir.Down;
+                            doorCs.DoorPos = new Vector2(map_x, map_y);
+                            ActionKit.DelayFrame(1, () =>
+                            {
+                                wallTileMap.SetTile(new Vector3Int(map_x - 1, map_y, 0), null);
+                                wallTileMap.SetTile(new Vector3Int(map_x + 1, map_y, 0), null);
+                            }).StartCurrentScene();
+                            room.AddDoor(doorCs);
                         }
                         else
                         {
                             wallTileMap.SetTile(new Vector3Int(map_x, map_y, 0), wallTile);
-
                         }
 
                     }
@@ -316,6 +381,7 @@ namespace GameRuntime.Room
                     }
                 }
             }
+            return room;
         }
 
     }

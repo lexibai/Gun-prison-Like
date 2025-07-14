@@ -1,4 +1,4 @@
-// Generate Id:771531f9-8db1-4c2b-8ae7-83c01cfe5cd8
+// Generate Id:760d6088-3fcb-4719-8875-c23602cb4726
 using UnityEngine;
 
 namespace GameRuntime.Room
@@ -6,6 +6,8 @@ namespace GameRuntime.Room
 	public partial class LevelController
 	{
 		public GameRuntime.Room.Room Room;
+		
+		public GameRuntime.Room.Door Door;
 		
 		public GameRuntime.PowerUp.HP1 HP1;
 		
