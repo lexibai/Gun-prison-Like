@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace GameRuntime.Room
@@ -12,10 +13,11 @@ namespace GameRuntime.Room
             this.roomType = roomType;
         }
 
-        public RoomNode AddChildren(RoomType roomType)
+        public RoomNode AddChildren(RoomType roomType, Action<RoomNode> addBranch = null)
         {
             RoomNode roomNode = new RoomNode(roomType);
             children.Add(roomNode);
+            addBranch?.Invoke(roomNode);
             return roomNode;
         }
     }

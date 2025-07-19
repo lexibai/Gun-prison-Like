@@ -1,4 +1,5 @@
 using GameRuntime.Weapon;
+using QFramework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace GameRuntime.Actor
 
         public List<AudioClip> fireAudios;
 
-        public AudioSource audioSource;
+        //public AudioSource audioSource;
 
 
 
@@ -33,7 +34,7 @@ namespace GameRuntime.Actor
         {
             Application.targetFrameRate = 60; // Set target frame rate to 60 FPS
             rb = GetComponent<Rigidbody2D>();
-            audioSource = gameObject.AddComponent<AudioSource>();
+            //audioSource = gameObject.AddComponent<AudioSource>();
 
         }
 
@@ -77,8 +78,9 @@ namespace GameRuntime.Actor
                 // Attack logic can be implemented here
                 if (Time.frameCount % 20 == 0) // Attack every second
                 {
-                    audioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
-                    audioSource.Play();
+                    AudioKit.PlaySound(fireAudios[Random.Range(0, fireAudios.Count)]);
+                    //audioSource.clip = fireAudios[Random.Range(0, fireAudios.Count)];
+                    //audioSource.Play();
 
                     Vector2 direction = (Global.Player.transform.position - transform.position);
                     GameObject bulletObj = Instantiate(enemyBullet);

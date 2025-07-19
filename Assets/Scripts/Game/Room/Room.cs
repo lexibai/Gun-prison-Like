@@ -25,12 +25,15 @@ namespace GameRuntime.Room
 
 		private RoomConfig roomConfig = new RoomConfig();
 
-		private List<EnemyWaveConfig> enemyWaveConfigs = new List<EnemyWaveConfig>()
+		private List<EnemyWaveConfig> enemyWaveConfigs = new List<EnemyWaveConfig>();
+		void Awake()
 		{
-			new EnemyWaveConfig(),
-			new EnemyWaveConfig(),
-			new EnemyWaveConfig()
-		};
+			int randomEnemyWaveNum = Random.Range(1, 4);
+			for (int i = 0; i < randomEnemyWaveNum; i++)
+			{
+				enemyWaveConfigs.Add(new EnemyWaveConfig());
+			}
+		}
 
 		public Room WithRoomConfig(RoomConfig roomConfig)
 		{

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using QFramework;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -44,17 +45,40 @@ namespace GameRuntime.Room
         void Start()
         {
             RoomNode roomNode = new RoomNode();
-            roomNode.AddChildren(RoomType.Battle)
+            roomNode
+                 .AddChildren(RoomType.Chest)
+                .AddChildren(RoomType.Battle, (roomNode) =>
+                {
+                    roomNode
+                    .AddChildren(RoomType.Battle)
+                    .AddChildren(RoomType.Chest)
+                    .AddChildren(RoomType.Battle)
+                    .AddChildren(RoomType.Battle);
+                })
+                .AddChildren(RoomType.Battle, (roomNode) =>
+                {
+                    roomNode
+                    .AddChildren(RoomType.Battle)
+                    .AddChildren(RoomType.Battle)
+                    .AddChildren(RoomType.Chest)
+                    .AddChildren(RoomType.Battle)
+                    .AddChildren(RoomType.Battle);
+                })
+                 .AddChildren(RoomType.Chest)
+                 .AddChildren(RoomType.Chest)
+                 .AddChildren(RoomType.Chest)
+                 .AddChildren(RoomType.Chest)
+                // .AddChildren(RoomType.Battle)
                 .AddChildren(RoomType.Chest)
-                .AddChildren(RoomType.Battle)
-                .AddChildren(RoomType.Battle)
-                .AddChildren(RoomType.Chest)
-                .AddChildren(RoomType.Battle)
-                .AddChildren(RoomType.Battle)
                 .AddChildren(RoomType.Finish);
 
             DynaGrid<Room> roomGrid = new DynaGrid<Room>();
-            DynaGrid<RoomGenerateNode> dynaGrid = GenerateRoomNodeBFS(roomNode);
+            int optimal = 0;
+            DynaGrid<RoomGenerateNode> dynaGrid = new DynaGrid<RoomGenerateNode>();
+            while (!GenerateRoomNodeBFS(roomNode, optimal++, dynaGrid))
+            {
+                dynaGrid.Clear();
+            }
             var offset = Vector2.zero;
             dynaGrid.ForEach((x, y, generateNode) =>
             {
@@ -67,10 +91,10 @@ namespace GameRuntime.Room
 
 
 
-        private DynaGrid<RoomGenerateNode> GenerateRoomNodeBFS(RoomNode roomNode)
+        private bool GenerateRoomNodeBFS(RoomNode roomNode, int optimal, DynaGrid<RoomGenerateNode> grid)
         {
+
             Queue<RoomGenerateNode> queue = new Queue<RoomGenerateNode>();
-            DynaGrid<RoomGenerateNode> grid = new DynaGrid<RoomGenerateNode>();
             queue.Enqueue(new RoomGenerateNode()
             {
                 x = 0,
@@ -84,31 +108,32 @@ namespace GameRuntime.Room
                 RoomGenerateNode roomGenerateNode = queue.Dequeue();
                 grid[roomGenerateNode.x, roomGenerateNode.y] = roomGenerateNode;
 
-                List<RoomGenerateDir> dirList = new List<RoomGenerateDir>();
-                if (grid[roomGenerateNode.x + 1, roomGenerateNode.y] == null)
+                var dirList = RoomHelper.GetCanSelectsSorting(grid, roomGenerateNode);
+
+                if (dirList.Count < roomGenerateNode.node.children.Count)
                 {
-                    dirList.Add(RoomGenerateDir.Right);
-                }
-                if (grid[roomGenerateNode.x - 1, roomGenerateNode.y] == null)
-                {
-                    dirList.Add(RoomGenerateDir.Left);
-                }
-                if (grid[roomGenerateNode.x, roomGenerateNode.y + 1] == null)
-                {
-                    dirList.Add(RoomGenerateDir.Up);
-                }
-                if (grid[roomGenerateNode.x, roomGenerateNode.y - 1] == null)
-                {
-                    dirList.Add(RoomGenerateDir.Down);
+                    Debug.Log($"2候选列表{dirList.Count}，子节点数量{roomGenerateNode.node.children.Count}");
+                    Debug.LogWarning("房间位置冲突");
+                    return false;
                 }
 
                 foreach (RoomNode children in roomGenerateNode.node.children)
                 {
-                    RoomGenerateDir roomGenerateDir = dirList.GetRandomItem();
+                    RoomGenerateDir roomGenerateDir = dirList.First().roomGenerateDir;
+                    if (Random.Range(0, 100) < optimal)
+                    {
+                        dirList.RemoveAt(0);
+                    }
+                    else
+                    {
+                        roomGenerateDir = dirList.GetRandomItem().roomGenerateDir;
+                        dirList.RemoveAll(item => item.roomGenerateDir == roomGenerateDir);
+                    }
+
                     if (roomGenerateDir == RoomGenerateDir.Right)
                     {
                         roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
-                        queue.Enqueue(new RoomGenerateNode()
+                        RoomGenerateNode newNode = new RoomGenerateNode()
                         {
                             x = roomGenerateNode.x + 1,
                             y = roomGenerateNode.y,
@@ -117,12 +142,14 @@ namespace GameRuntime.Room
                             {
                                 RoomGenerateDir.Left
                             }
-                        });
+                        };
+                        queue.Enqueue(newNode);
+                        grid[newNode.x, newNode.y] = newNode;
                     }
                     else if (roomGenerateDir == RoomGenerateDir.Left)
                     {
                         roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
-                        queue.Enqueue(new RoomGenerateNode()
+                        RoomGenerateNode newNode = new RoomGenerateNode()
                         {
                             x = roomGenerateNode.x - 1,
                             y = roomGenerateNode.y,
@@ -131,13 +158,14 @@ namespace GameRuntime.Room
                             {
                                 RoomGenerateDir.Right
                             }
-                        });
-
+                        };
+                        queue.Enqueue(newNode);
+                        grid[newNode.x, newNode.y] = newNode;
                     }
                     else if (roomGenerateDir == RoomGenerateDir.Up)
                     {
                         roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
-                        queue.Enqueue(new RoomGenerateNode()
+                        RoomGenerateNode newNode = new RoomGenerateNode()
                         {
                             x = roomGenerateNode.x,
                             y = roomGenerateNode.y + 1,
@@ -146,13 +174,14 @@ namespace GameRuntime.Room
                             {
                                 RoomGenerateDir.Down
                             }
-                        });
-
+                        };
+                        queue.Enqueue(newNode);
+                        grid[newNode.x, newNode.y] = newNode;
                     }
                     else if (roomGenerateDir == RoomGenerateDir.Down)
                     {
                         roomGenerateNode.doorOpenDir.Add(roomGenerateDir);
-                        queue.Enqueue(new RoomGenerateNode()
+                        RoomGenerateNode newNode = new RoomGenerateNode()
                         {
                             x = roomGenerateNode.x,
                             y = roomGenerateNode.y - 1,
@@ -161,14 +190,16 @@ namespace GameRuntime.Room
                             {
                                 RoomGenerateDir.Up
                             }
-                        });
-
+                        };
+                        queue.Enqueue(newNode);
+                        grid[newNode.x, newNode.y] = newNode;
                     }
                 }
 
             }
-            return grid;
+            return true;
         }
+
 
         private Room GenerateRoomNode(RoomGenerateNode roomNode, Vector2 MapPos)
         {

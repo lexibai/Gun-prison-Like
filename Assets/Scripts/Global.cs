@@ -7,6 +7,7 @@ namespace GameRuntime
     {
         public static GameObject Player;
         public static GameObject Enmpy;
+        public static Room.Room currRoom;
 
         public static int currentHp = 10;
 

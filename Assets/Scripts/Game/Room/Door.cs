@@ -8,6 +8,8 @@ namespace GameRuntime.Room
 	{
 		protected enum State
 		{
+			IdelOpen,
+			IdelClose,
 			Open,
 			Close
 		}
@@ -21,14 +23,25 @@ namespace GameRuntime.Room
 
 		void Start()
 		{
+			fsm.State(State.IdelClose).OnEnter(() =>
+			{
+				SelfBoxCollider2D.isTrigger = false;
+				SelfSpriteRenderer.sprite = DoorClose;
+			});
+			fsm.State(State.IdelClose).OnEnter(() =>
+			{
+				SelfBoxCollider2D.isTrigger = false;
+				SelfSpriteRenderer.sprite = DoorClose;
+			}).OnExit(() =>
+				{
+					AudioKit.PlaySound("resources://DoorOpen");
+				});
 			fsm.State(State.Open)
 				.OnEnter(() =>
 				{
+					AudioKit.PlaySound("resources://DoorOpen");
 					SelfBoxCollider2D.isTrigger = true;
 					SelfSpriteRenderer.sprite = DoorOpen;
-				}).OnExit(() =>
-				{
-					AudioKit.PlaySound("resources://DoorOpen");
 				});
 			fsm.State(State.Close)
 				.OnEnter(() =>
@@ -39,7 +52,15 @@ namespace GameRuntime.Room
 				{
 					AudioKit.PlaySound("resources://DoorOpen");
 				});
-			fsm.StartState(State.Open);
+			fsm.StartState(State.IdelClose);
+		}
+
+		void OnCollisionEnter2D(Collision2D collision)
+		{
+			if (collision.gameObject.CompareTag("Player") && fsm.CurrentStateId == State.IdelClose)
+			{
+				OpenDoor();
+			}
 		}
 
 		public void OpenDoor()
