@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using GameRuntime.UI;
 using GameRuntime.Weapon;
@@ -133,16 +134,17 @@ namespace GameRuntime.Actor
             rb.linearVelocity = moveInput.normalized * 5f; // 设置刚体速度
 
             Vector2 direction = LookDir();
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Vector2 directionEnemy = LookEnemy();
+            float angle = Mathf.Atan2(directionEnemy.y, directionEnemy.x) * Mathf.Rad2Deg;
             weapon.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // 调整武器朝向
 
-            weapon.localScale = new Vector3(1, direction.x > 0 ? 1 : -1, 1); // 根据鼠标位置调整武器缩放
+            weapon.localScale = new Vector3(1, directionEnemy.x > 0 ? 1 : -1, 1); // 根据鼠标位置调整武器缩放
             sprite.flipX = direction.x < 0; // 根据鼠标位置调整人物朝向
 
             //print(isfireHold);
             if (isfireHold)
             {
-                gun.FireHold(LookDir());
+                gun.FireHold(LookEnemy());
             }
         }
 
@@ -155,6 +157,52 @@ namespace GameRuntime.Actor
             Vector2 direction = (mouseWorldPos - transform.position);
             return direction;
         }
+
+        private Vector2 LookEnemy()
+        {
+            Room.Room currentRoom = Global.currentRoom;
+            if (currentRoom)
+            {
+                Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(
+              new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane)
+          );
+                Enemy enemy = currentRoom.Enemys
+                    .Where(e => e != null) // 确保敌人不为空
+                            .OrderBy(e =>
+                            {
+                                return (e.transform.position - mouseWorldPos).sqrMagnitude;
+                            }).FirstOrDefault(
+                                e =>
+                                {
+                                    Vector3 dir = e.transform.position - this.transform.position;
+                                    RaycastHit2D[] raycastHit2Ds = Physics2D.RaycastAll(this.transform.position,
+                                        dir,
+                                        dir.magnitude,
+                                        (LayerMask.GetMask("wall") | LayerMask.GetMask("enemy")));
+                                    Debug.DrawRay(this.transform.position, dir, Color.red, 0.2f);
+                                    print(raycastHit2Ds[0].transform.gameObject.name);
+                                    return raycastHit2Ds[0].transform.gameObject.CompareTag("enemy");
+                                }
+                            );
+                if (enemy)
+                {
+                    Aim.Position(enemy.Position());
+                    Aim.Show();
+                    return enemy.transform.position - this.transform.position;
+                }
+                else
+                {
+                    Aim.Hide();
+                    return LookDir();
+                }
+            }
+            Aim.Hide();
+            return LookDir();
+        }
+
+
+
 
         private void CutGun()
         {

@@ -1,4 +1,4 @@
-// Generate Id:a964f5a4-d52c-4c2f-92ee-194aa61f2e9e
+// Generate Id:44374375-1e47-4d3d-8ab6-53abfd039bc0
 using UnityEngine;
 
 namespace GameRuntime.Actor
@@ -24,6 +24,8 @@ namespace GameRuntime.Actor
 		public UnityEngine.GameObject GunShootLight;
 		
 		public UnityEngine.UI.Text info;
+		
+		public QFramework.ViewController Aim;
 		
 		public UnityEngine.AudioClip GunTake1;
 		

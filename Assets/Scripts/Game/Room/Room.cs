@@ -20,6 +20,7 @@ namespace GameRuntime.Room
 		private RoomState state = RoomState.Ready;
 
 		private HashSet<Enemy> enemys = new HashSet<Enemy>();
+		public HashSet<Enemy> Enemys => enemys;
 		private List<Vector3> enemyPos = new List<Vector3>();
 		public List<Door> Doors = new List<Door>();
 
@@ -87,7 +88,7 @@ namespace GameRuntime.Room
 		{
 			if (collision.CompareTag("Player"))
 			{
-
+				Global.currentRoom = this;
 				//关闭所有门
 				if (roomConfig.roomType == RoomType.Battle)
 				{

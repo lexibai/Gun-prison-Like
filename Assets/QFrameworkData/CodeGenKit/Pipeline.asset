@@ -19,8 +19,8 @@ MonoBehaviour:
     From: 0
     NameToFullName: []
     BindInfos: []
-    ScriptsFolder: Assets\Scripts\Game\Room
-    ClassName: Door
-    Namespace: GameRuntime.Room
+    ScriptsFolder: Assets/Scripts/Game/Actor
+    ClassName: Aim
+    Namespace: GameRuntime.Actor
     MainCode: 
     DesignerCode: 
